@@ -4,28 +4,35 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
    
-     <script>
+    <script>
     AFRAME.registerComponent('artwork-info', {
-      init: function () {
-        const infoPanel = document.querySelector("#info-panel");
-        const moreInfoButton = document.querySelector("#more-info-button");
-        const closeButton = document.querySelector("#close-button");
+  init: function () {
+    document.querySelector("a-scene").addEventListener("loaded", () => { 
+      const infoPanel = document.querySelector("#info-panel");
+      const moreInfoButton = document.querySelector("#more-info-button");
+      const closeButton = document.querySelector("#close-button");
 
-        // Ensure buttons are clickable
-        moreInfoButton.classList.add("clickable");
-        closeButton.classList.add("clickable");
-
-        // Show info panel when the button is clicked
-        moreInfoButton.addEventListener("click", function () {
-          infoPanel.setAttribute("visible", true);
-        });
-
-        // Hide info panel when the close button is clicked
-        closeButton.addEventListener("click", function () {
-          infoPanel.setAttribute("visible", false);
-        });
+      if (!infoPanel || !moreInfoButton || !closeButton) {
+        console.error("One or more elements are missing.");
+        return;
       }
+
+      // Ensure buttons are clickable
+      moreInfoButton.classList.add("clickable");
+      closeButton.classList.add("clickable");
+
+      // Show info panel when the button is clicked
+      moreInfoButton.addEventListener("click", function () {
+        infoPanel.setAttribute("visible", true);
+      });
+
+      // Hide info panel when the close button is clicked
+      closeButton.addEventListener("click", function () {
+        infoPanel.setAttribute("visible", false);
+      });
     });
+  }
+});;
 
     AFRAME.registerComponent('mytarget', {
       init: function () {
@@ -242,7 +249,7 @@
         ></a-video>
       </a-entity>
     </a-scene>
-    
+     
     <script>
     document.addEventListener("DOMContentLoaded", () => {
       // Get elements
