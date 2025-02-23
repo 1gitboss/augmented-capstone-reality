@@ -4,6 +4,45 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
    
+     <script>
+    AFRAME.registerComponent('artwork-info', {
+      init: function () {
+        const infoPanel = document.querySelector("#info-panel");
+        const moreInfoButton = document.querySelector("#more-info-button");
+        const closeButton = document.querySelector("#close-button");
+
+        // Ensure buttons are clickable
+        moreInfoButton.classList.add("clickable");
+        closeButton.classList.add("clickable");
+
+        // Show info panel when the button is clicked
+        moreInfoButton.addEventListener("click", function () {
+          infoPanel.setAttribute("visible", true);
+        });
+
+        // Hide info panel when the close button is clicked
+        closeButton.addEventListener("click", function () {
+          infoPanel.setAttribute("visible", false);
+        });
+      }
+    });
+
+    AFRAME.registerComponent('mytarget', {
+      init: function () {
+        this.el.addEventListener('targetFound', () => {
+          console.log("Artwork detected!");
+          document.querySelector("#more-info-button").setAttribute("visible", true);
+        });
+
+        this.el.addEventListener('targetLost', () => {
+          console.log("Artwork lost!");
+          document.querySelector("#info-panel").setAttribute("visible", false);
+          document.querySelector("#more-info-button").setAttribute("visible", false);
+        });
+      }
+    });
+  </script>
+    
   </head>
 
   <body>
@@ -65,16 +104,7 @@
 
         <!-- Info Button (Click to Show Info) -->
         
-        
-        <a-box id="info-btn-2" width="1" height="0.4" position="0 0 0" depth="0.0" color="red">
-          <a-entity
-            text="text: What's up"
-            scale="0.2 0.2 0.2"
-            color="blue"
-            position="-0.3 0.01 0"
-          >
-          </a-entity>
-        </a-box> 
+      
         
         <a-plane
           id="info-btn-1"
@@ -212,5 +242,25 @@
         ></a-video>
       </a-entity>
     </a-scene>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Get elements
+      const infoBox1 = document.querySelector("#info-box-1");
+      const infoBtn1 = document.querySelector("#info-btn-1");
+      const closeBtn1 = document.querySelector("#close-btn-1");
+
+      // Show info when button is clicked
+      infoBtn1.addEventListener("click", () => {
+        infoBox1.setAttribute("visible", "true");
+      });
+
+      // Hide info when close button is clicked
+      closeBtn1.addEventListener("click", () => {
+        infoBox1.setAttribute("visible", "false");
+      });
+    });
+  </script>
+    
   </body>
 </html>
