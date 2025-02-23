@@ -4,6 +4,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <script>
+    AFRAME.registerComponent('button-interaction', {
+      init: function () {
+        const infoBox1 = document.querySelector("#info-box-1");
+        const infoBtn1 = document.querySelector("#info-btn-1");
+        const closeBtn1 = document.querySelector("#close-btn-1");
+
+        // Ensure elements are clickable
+        infoBtn1.setAttribute("class", "clickable");
+        closeBtn1.setAttribute("class", "clickable");
+
+        // Show info when button is clicked
+        infoBtn1.addEventListener("click", () => {
+          console.log("Info Button Clicked");
+          infoBox1.setAttribute("visible", "true");
+        });
+
+        // Hide info when close button is clicked
+        closeBtn1.addEventListener("click", () => {
+          console.log("Close Button Clicked");
+          infoBox1.setAttribute("visible", "false");
+        });
+      }
+    });
+
+    // Attach the component to the scene so it runs
+    document.querySelector("a-scene").setAttribute("button-interaction", "");
+  </script>
 </head>
 
 <body>
@@ -112,34 +140,7 @@
 
   </a-scene>
 
-  <script>
-    AFRAME.registerComponent('button-interaction', {
-      init: function () {
-        const infoBox1 = document.querySelector("#info-box-1");
-        const infoBtn1 = document.querySelector("#info-btn-1");
-        const closeBtn1 = document.querySelector("#close-btn-1");
-
-        // Ensure elements are clickable
-        infoBtn1.setAttribute("class", "clickable");
-        closeBtn1.setAttribute("class", "clickable");
-
-        // Show info when button is clicked
-        infoBtn1.addEventListener("click", () => {
-          console.log("Info Button Clicked");
-          infoBox1.setAttribute("visible", "true");
-        });
-
-        // Hide info when close button is clicked
-        closeBtn1.addEventListener("click", () => {
-          console.log("Close Button Clicked");
-          infoBox1.setAttribute("visible", "false");
-        });
-      }
-    });
-
-    // Attach the component to the scene so it runs
-    document.querySelector("a-scene").setAttribute("button-interaction", "");
-  </script>
+  
 
 </body>
 
