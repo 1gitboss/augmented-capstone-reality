@@ -5,32 +5,45 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <script>
-    AFRAME.registerComponent('button-interaction', {
-      init: function () {
-        const infoBox1 = document.querySelector("#info-box-1");
-        const infoBtn1 = document.querySelector("#info-btn-1");
-        const closeBtn1 = document.querySelector("#close-btn-1");
+    AFRAME.registerComponent("button-interaction", {
+  init: function () {
+    const scene = this.el;
+    
+    // Select all info buttons and close buttons
+    const infoButtons = document.querySelectorAll("[id^='info-btn']");
+    const closeButtons = document.querySelectorAll("[id^='close-btn']");
+    
+    infoButtons.forEach((infoBtn, index) => {
+      const infoBox = document.querySelector(`#info-box-${index + 1}`);
+      const closeBtn = document.querySelector(`#close-btn-${index + 1}`);
+      
+      if (infoBox && closeBtn) {
+        infoBtn.setAttribute("class", "clickable");
+        closeBtn.setAttribute("class", "clickable");
 
-        // Ensure elements are clickable
-        infoBtn1.setAttribute("class", "clickable");
-        closeBtn1.setAttribute("class", "clickable");
-
-        // Show info when button is clicked
-        infoBtn1.addEventListener("click", () => {
-          console.log("Info Button Clicked");
-          infoBox1.setAttribute("visible", "true");
+        infoBtn.addEventListener("click", () => {
+          console.log(`Info Button ${index + 1} Clicked`);
+          infoBox.setAttribute("visible", "true");
         });
 
-        // Hide info when close button is clicked
-        closeBtn1.addEventListener("click", () => {
-          console.log("Close Button Clicked");
-          infoBox1.setAttribute("visible", "false");
+        closeBtn.addEventListener("click", () => {
+          console.log(`Close Button ${index + 1} Clicked`);
+          infoBox.setAttribute("visible", "false");
         });
       }
     });
+  }
+});
 
-    // Attach the component to the scene so it runs
-    document.querySelector("a-scene").setAttribute("button-interaction", "");
+// Attach component to the scene
+    const sceneElement = document.querySelector("a-scene");
+if (sceneElement) {
+  sceneElement.setAttribute("button-interaction", "");
+} else {
+  console.log("Element not found.");
+}
+document.querySelector("a-scene").setAttribute("button-interaction", "");
+
   </script>
 </head>
 
@@ -94,17 +107,17 @@
 
     <a-entity mindar-image-target="targetIndex: 3">
       <!-- Info Box (Initially Hidden) -->
-      <a-entity id="info-box-1" position="0 1 0" visible="false">
+      <a-entity id="info-box-2" position="0 1 0" visible="false">
         <a-plane width="1.5" height="1" color="black" opacity="0.8"></a-plane>
         <a-text value="Title: The Journey\nArtist: Kwame Asante\nMeaning: A story of resilience and culture." 
                 position="0 0 0.1" align="center" color="white" width="1.3"></a-text>
         <!-- Close Button -->
-        <a-plane id="close-btn-1" position="0 -0.5 0.1" width="0.5" height="0.2" color="red"></a-plane>
+        <a-plane id="close-btn-2" position="0 -0.5 0.1" width="0.5" height="0.2" color="red"></a-plane>
         <a-text value="Close" position="0 -0.5 0.11" align="center" color="white"></a-text>
       </a-entity>
 
       <!-- Info Button (Click to Show Info) -->
-      <a-plane id="info-btn-1" position="0 -0.8 0" width="0.7" height="0.3" color="green"></a-plane>
+      <a-plane id="info-btn-2" position="0 -0.8 0" width="0.7" height="0.3" color="green"></a-plane>
       <a-text value="More Info" position="0 -0.8 0.1" align="center" color="white"></a-text>
     </a-entity>
 
