@@ -57,73 +57,9 @@
       renderer="colorManagement: true, physicallyCorrectLights"
       device-orientation-permission-ui="enabled: false"
     >
-      <a-assets>
-        <video
-          id="halo-girl"
-          src="videos/halo-girl.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="helmet-guy"
-          src="videos/helmet-guy.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="look-out"
-          src="videos/look-out.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="roof-men"
-          src="videos/roof-men.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="wade-guy"
-          src="videos/wade guy.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="net-man"
-          src="videos/netman.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="hill-girl"
-          src="videos/hill-girl.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="dancer"
-          src="videos/dancer.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <video
-          id="green-light"
-          src="videos/green-light.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-      </a-assets>
+      
 
-      <a-camera position="0 0 0" look-controls="enabled: false">
+      <a-camera cursor="rayOrigin: mouse" position="0 0 0" look-controls="enabled: false">
         <a-cursor></a-cursor>
       </a-camera>
       <a-entity
@@ -168,7 +104,7 @@
         <!-- Info Button (Click to Show Info) -->
         
         
-<!--         <a-box id="info-btn-2" width="1" height="0.4" position="0 0 0" depth="0.0" color="red">
+        <a-box id="info-btn-2" width="1" height="0.4" position="0 0 0" depth="0.0" color="red">
           <a-entity
             text="text: What's up"
             scale="0.2 0.2 0.2"
@@ -176,8 +112,8 @@
             position="-0.3 0.01 0"
           >
           </a-entity>
-        </a-box> -->
-      
+        </a-box> 
+        
         <a-plane
           id="info-btn-1"
           position="0 -0.8 0"
