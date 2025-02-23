@@ -3,46 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <script>
-      AFRAME.registerComponent("button-interaction", {
-        init: function () {
-          const scene = this.el;
-
-          // Select all info buttons and close buttons
-          const infoButtons = document.querySelectorAll("[id^='info-btn']");
-          const closeButtons = document.querySelectorAll("[id^='close-btn']");
-
-          infoButtons.forEach((infoBtn, index) => {
-            const infoBox = document.querySelector(`#info-box-${index + 1}`);
-            const closeBtn = document.querySelector(`#close-btn-${index + 1}`);
-
-            if (infoBox && closeBtn) {
-              infoBtn.setAttribute("class", "clickable");
-              closeBtn.setAttribute("class", "clickable");
-
-              infoBtn.addEventListener("click", () => {
-                console.log(`Info Button ${index + 1} Clicked`);
-                infoBox.setAttribute("visible", "true");
-              });
-
-              closeBtn.addEventListener("click", () => {
-                console.log(`Close Button ${index + 1} Clicked`);
-                infoBox.setAttribute("visible", "false");
-              });
-            }
-          });
-        },
-      });
-
-      // Attach component to the scene
-      const sceneElement = document.querySelector("a-scene");
-      if (sceneElement) {
-        sceneElement.setAttribute("button-interaction", "");
-      } else {
-        console.log("Element not found.");
-      }
-      // document.querySelector("a-scene").setAttribute("button-interaction", "");
-    </script>
+   
   </head>
 
   <body>
@@ -59,9 +20,10 @@
     >
       
 
-      <a-camera cursor="rayOrigin: mouse" position="0 0 0" look-controls="enabled: false">
-        <a-cursor></a-cursor>
-      </a-camera>
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" 
+              raycaster="far: 10000; objects: .clickable">
+    </a-camera>
+
       <a-entity
         mindar-image-target="targetIndex: 1"
         animation="property: position; to: 0 0 0; dur: 100; easing: easeOutQuad"
@@ -74,7 +36,7 @@
         ></a-video>
       </a-entity>
 
-      <a-entity mindar-image-target="targetIndex: 2">
+      <a-entity mindar-image-target="targetIndex: 2" mytarget>
         <!-- Info Box (Initially Hidden) -->
         <a-entity id="info-box-1" position="0 1 0" visible="false">
           <a-plane width="1.5" height="1" color="black" opacity="0.8"></a-plane>
