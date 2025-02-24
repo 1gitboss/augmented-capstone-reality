@@ -83,20 +83,17 @@
       </a-entity>
 
       <a-entity mindar-image-target="targetIndex: 2" mytarget>
-        <a-entity>
         
+        <a-entity id="more-info-button" class="clickable">
+             <a-plane
+                position="0 -0.8 0" width="0.7" height="0.3" color="green">
+              </a-plane>
+        
+              <a-text
+                value="More Info" position="0 -0.8 0.1" align="center" color="white">
+              </a-text>
         </a-entity>
-        <a-plane
-          id="more-info-button" position="0 -0.8 0" width="0.7" height="0.3" color="green"></a-plane>
-        
-        
-        <a-text
-          value="More Info"
-          position="0 -0.8 0.1"
-          align="center"
-          color="white"
-          class="clickable"
-        ></a-text>
+       
         
         <!-- Info Box (Initially Hidden) -->
         <a-entity id="info-box-1" position="0 1 0" visible="false">
