@@ -38,13 +38,13 @@
       init: function () {
         this.el.addEventListener('targetFound', () => {
           console.log("Artwork detected!");
-          document.querySelector("#more-info-button").setAttribute("visible", "true");
+          
         });
 
         this.el.addEventListener('targetLost', () => {
           console.log("Artwork lost!");
-          document.querySelector("#info-box-1").setAttribute("visible", "false");
-          document.querySelector("#more-info-button").setAttribute("visible", "false");
+         
+          
         });
       }
     });
@@ -75,7 +75,7 @@
  
 
       <!-- Info Panel -->
-      <a-entity id="info-box-1" position="0 1 0" visible="false">
+      <a-entity id="info-box-1" position="0 1 0" visible="true">
         
         <a-plane width="1.1" height="auto" color="black" opacity="0.8"></a-plane>
        
@@ -84,7 +84,7 @@
                        Significance: Wade in Water explores the relationship between water and human 
                        existence. Since time immemorial, water has played a vital role 
                        in the formation of civilization and trade."
-                position="-0.8 0 0" align="left" color="white" width="1">
+                position="-0.8 0 0" align="left" font="font: Verdana" color="white" width="1">
         </a-text>
           
     
