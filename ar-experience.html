@@ -12,29 +12,24 @@
 
           // Get elements
           const infoPanel = document.querySelector("#info-box-1");
-          const infoButton = document.querySelector("#more-info-button");
-          const closeButton = document.querySelector("#close-btn-1");
+          const igButton = document.querySelector("#ig-link");
+          const webButton = document.querySelector("#web-link");
 
-          if (!infoPanel || !infoButton || !closeButton) {
+          if (!infoPanel || !igButton || !webButton) {
             console.error("One or more elements are missing.");
             return;
           }
 
           // Make sure objects are interactive
-          infoButton.classList.add("clickable");
-          closeButton.classList.add("clickable");
+          igButton.classList.add("clickable");
+          webButton.classList.add("clickable");
+          // infoButton.classList.add("clickable");
+          // closeButton.classList.add("clickable");
 
           // Show info panel when button is clicked
-          infoButton.addEventListener("click", () => {
-            console.log("More Info Clicked!");
-            infoPanel.setAttribute("visible", "true");
-          });
+          
 
-          // Hide info panel when close button is clicked
-          closeButton.addEventListener("click", () => {
-            console.log("Close Button Clicked!");
-            infoPanel.setAttribute("visible", "false");
-          });
+      
         });
       }
     });
@@ -77,25 +72,32 @@
 
     <!-- Target Image -->
     <a-entity mindar-image-target="targetIndex: 2" mytarget>
-
-      <!-- "More Info" Image Button -->
-      
-<!--      
+ 
 
       <!-- Info Panel -->
       <a-entity id="info-box-1" position="0 1 0" visible="false">
+        
         <a-plane width="1.1" height="auto" color="black" opacity="0.8"></a-plane>
-        <a-text value="Title: The Journey\n
+       
+        <a-text value="Title: Wade in Water\n
                        Artist: Nana Asomani\n
-                       Meaning: A story of resilience and culture."
-                position="-0.8 0 0" align="center" color="white" width="1"></a-text>
-        
+                       Significance: Wade in Water explores the relationship between water and human 
+                       existence. Since time immemorial, water has played a vital role 
+                       in the formation of civilization and trade."
+                position="-0.8 0 0" align="left" color="white" width="1">
+        </a-text>
+          
     
-        
       </a-entity>
+      
       <a-entity>
-        <a-image id="more-info-button" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/more-info.png?v=1740476810453"
+        <a-image id="ig-link" class="clickable" 
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG%20.png?v=1740499993566"
+                 alpha-test="0.5" position="0 -0.8 0" height="0.15" width="0.15">
+                </a-image>
+        
+        <a-image id="web-link" class="clickable" 
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/web.png?v=1740499991549"
                  alpha-test="0.5" position="0 -0.8 0" height="0.15" width="0.15">
                 </a-image>
       </a-entity>
