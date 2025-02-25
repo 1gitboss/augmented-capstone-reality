@@ -36,7 +36,8 @@
   >
 
     <!-- Add Cursor for Clicking (for future improvements) -->
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable">
+        </a-camera>
 
     <!-- Artwork Target -->
     <a-entity mindar-image-target="targetIndex: 2" show-info>
@@ -53,6 +54,13 @@
 
         <!-- Social Media & Website Links -->
         
+        
+      </a-entity>
+      
+        <a-entity>
+        <a-image visible=false id="profile-button" class="clickable" src="#icon-profile" position="-0.42 -0.5 0" height="0.15" width="0.15"
+            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+          ></a-image>
         <a-text value="Instagram: @kwameasanteart" position="0 -0.5 0.1" align="center" color="lightblue"
                 width="1.2" link="href: https://instagram.com/kwameasanteart; target: _blank"></a-text>
         
