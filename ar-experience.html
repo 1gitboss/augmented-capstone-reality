@@ -5,16 +5,51 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <script>
-    AFRAME.registerComponent('show-info', {
+    AFRAME.registerComponent('artwork-info', {
+      init: function () {
+        this.el.addEventListener('loaded', () => { 
+          console.log("A-Frame Loaded!");
+
+          // Get elements
+          const infoPanel = document.querySelector("#info-box-1");
+          const infoButton = document.querySelector("#more-info-button");
+          const closeButton = document.querySelector("#close-btn-1");
+
+          if (!infoPanel || !infoButton || !closeButton) {
+            console.error("One or more elements are missing.");
+            return;
+          }
+
+          // Make sure objects are interactive
+          infoButton.classList.add("clickable");
+          closeButton.classList.add("clickable");
+
+          // Show info panel when button is clicked
+          infoButton.addEventListener("click", () => {
+            console.log("More Info Clicked!");
+            infoPanel.setAttribute("visible", "true");
+          });
+
+          // Hide info panel when close button is clicked
+          closeButton.addEventListener("click", () => {
+            console.log("Close Button Clicked!");
+            infoPanel.setAttribute("visible", "false");
+          });
+        });
+      }
+    });
+
+    AFRAME.registerComponent('mytarget', {
       init: function () {
         this.el.addEventListener('targetFound', () => {
           console.log("Artwork detected!");
-          document.querySelector("#info-box").setAttribute("visible", "true");
+          document.querySelector("#more-info-button").setAttribute("visible", "true");
         });
 
         this.el.addEventListener('targetLost', () => {
           console.log("Artwork lost!");
-          document.querySelector("#info-box").setAttribute("visible", "false");
+          document.querySelector("#info-box-1").setAttribute("visible", "false");
+          document.querySelector("#more-info-button").setAttribute("visible", "false");
         });
       }
     });
@@ -35,42 +70,41 @@
     device-orientation-permission-ui="enabled: false"
   >
 
-    <!-- Add Cursor for Clicking (for future improvements) -->
-     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable">
-        </a-camera>
+    <!-- Add Cursor for Clicking -->
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" 
+              raycaster="far: 10000; objects: .clickable">
+    </a-camera>
 
-    <!-- Artwork Target -->
-    <a-entity mindar-image-target="targetIndex: 2" show-info>
+    <!-- Target Image -->
+    <a-entity mindar-image-target="targetIndex: 2" mytarget>
 
-      <!-- Info Box (Visible Automatically on Target Detection) -->
-      <a-entity id="info-box" position="-0.8 0 0" visible="false">
-        <a-plane width="1" height="1" color="black" opacity="0.8"></a-plane>
-        
-        <!-- Artwork Details -->
+      <!-- "More Info" Image Button -->
+      <a-image id="more-info-button" class="clickable" src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/more-info.png?v=1740476810453"
+               alpha-test="0.5" position="0 -0.8 0" height="0.15" width="0.15">
+              </a-image>
+<!--       <a-plane id="" class="clickable"
+               position="0 -0.8 0" width="0.5" height="0.2"
+               material="src: https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/more-info.png?v=1740476810453" visible="false">
+      </a-plane> -->
+
+      <!-- Info Panel -->
+      <a-entity id="info-box-1" position="0 1 0" visible="false">
+        <a-plane width="1.5" height="1" color="black" opacity="0.8"></a-plane>
         <a-text value="Title: The Journey\n
-                       Artist: Kwame Asante\n
-                      Meaning: A story of resilience and culture."
+                       Artist: Nana Asomani\n
+                       Meaning: A story of resilience and culture."
                 position="0 0 0.1" align="center" color="white" width="1.3"></a-text>
-
-        <!-- Social Media & Website Links -->
         
-        
-      </a-entity>
-      
-        <a-entity>
-        <a-image visible=false id="profile-button" class="clickable" src="#icon-profile" position="-0.42 -0.5 0" height="0.15" width="0.15"
-            animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-          ></a-image>
-        <a-text value="Instagram: @kwameasanteart" position="0 -0.5 0.1" align="center" color="lightblue"
-                width="1.2" link="href: https://instagram.com/kwameasanteart; target: _blank"></a-text>
-        
-        <a-text value="Website: kwameasanteart.com" position="0 -0.7 0.1" align="center" color="lightgreen"
-                width="1.2" link="href: https://kwameasanteart.com; target: _blank"></a-text>
-
+        <!-- Close Button -->
+        <a-plane id="close-btn-1" class="clickable"
+                 position="0 -0.5 0.1" width="0.5" height="0.2"
+                 material="src: https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/close%20button.png?v=1740476714869">
+        </a-plane>
       </a-entity>
 
     </a-entity>
 
   </a-scene>
+
 </body>
 </html>
