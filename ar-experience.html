@@ -81,7 +81,7 @@
           this.audioElement.lang = 'en-US';
           this.audioElement.onend = () => {
             this.isPlaying = false;
-            const audioButton = document.querySelector("#audio-button-text");
+            const audioButton = document.querySelector("#audio-button-t");
             if (audioButton) audioButton.setAttribute("value", "Play Audio");
           };
         }
