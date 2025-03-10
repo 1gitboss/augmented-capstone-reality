@@ -81,8 +81,8 @@
           this.audioElement.lang = 'en-US';
           this.audioElement.onend = () => {
             this.isPlaying = false;
-            const audioButton = document.querySelector("#audio-button-t");
-            if (audioButton) audioButton.setAttribute("value", "Play Audio");
+            const audioButton = document.querySelector("#audio-button-pic");
+            if (audioButton) audioButton.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
           };
         }
         
@@ -97,7 +97,7 @@
           if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
         } else {
           speechSynthesis.cancel();
-          if (audioButtonText) audioButtonText.setAttribute("value", "Play Audio");
+          // if (audioButtonText) audioButtonText.setAttribute("value", "Play Audio");
           if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
         }
       }
@@ -151,14 +151,14 @@
  
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel" position="0 0.8 0" visible="false">
-        <a-plane width="1.2" height="0.25" color="black" opacity="0.8" radius="0.05"></a-plane>
+        <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
         <a-text value="Wade in Water" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
         <a-text value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
       </a-entity>
       
       <!-- Controls Panel at the Bottom -->
       <a-entity id="controls-panel" position="0 -0.8 0" visible="false">
-        <a-plane width="1.2" height="0.25" color="black" opacity="0.8" radius="0.05"></a-plane>
+        <a-plane width="1.5" height="0.8" color="black" opacity="0.7" radius="0.05"></a-plane>
         
         <!-- Social Media Icons -->
         <a-entity position="-0.5 0 0.01">
@@ -184,7 +184,7 @@
         </a-entity>
         
         <!-- Audio and More Info Buttons -->
-        <a-entity position="0.3 0 0.01">
+        <a-entity position="0 0.5 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
             <a-plane id="audio-button" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
