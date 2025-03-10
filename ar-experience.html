@@ -89,13 +89,16 @@
         // Toggle audio state
         this.isPlaying = !this.isPlaying;
         const audioButtonText = document.querySelector("#audio-button-text");
+        const audioButtonPic = document.querySelector("#audio-button-pic");
         
         if (this.isPlaying) {
           speechSynthesis.speak(this.audioElement);
-          if (audioButtonText) audioButtonText.setAttribute("value", "Pause");
+          // if (audioButtonText) audioButtonText.setAttribute("value", "Pause");
+          if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
         } else {
           speechSynthesis.cancel();
           if (audioButtonText) audioButtonText.setAttribute("value", "Play Audio");
+          if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
         }
       }
     });
@@ -186,7 +189,11 @@
           <a-entity position="-0.1 0 0">
             <a-plane id="audio-button" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
             <!-- put play icon here-->
-            <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text>
+            <a-image id="audio-buttton-pic" 
+                     src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
+                     position "0 0 0.01" height="0.15" width="0.15">
+            </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
