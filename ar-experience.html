@@ -3,34 +3,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
   <script>
     AFRAME.registerComponent('artwork-info', {
       init: function () {
-        this.el.addEventListener('loaded', () => { 
+        // Wait for scene to load
+        this.el.sceneEl.addEventListener('loaded', () => { 
           console.log("A-Frame Loaded!");
-
+          
           // Get elements
           const infoPanel = document.querySelector("#info-box");
           const igButton = document.querySelector("#ig-link");
           const webButton = document.querySelector("#web-link");
-
+          const audioButton = document.querySelector("#audio-button");
+          
           if (!infoPanel || !igButton || !webButton) {
             console.error("One or more elements are missing.");
             return;
           }
-
+          
           // Make sure objects are interactive
           igButton.classList.add("clickable");
           webButton.classList.add("clickable");
-          // infoButton.classList.add("clickable");
-          // closeButton.classList.add("clickable");
-
-          // Show info panel when button is clicked
+          if (audioButton) audioButton.classList.add("clickable");
           
-
-      
+          // Add click listeners
+          igButton.addEventListener('click', () => {
+            console.log("Instagram button clicked");
+            window.open("https://instagram.com/nanaasomani", "_blank");
+          });
+          
+          webButton.addEventListener('click', () => {
+            console.log("Website button clicked");
+            window.open("https://example.com/artist", "_blank");
+          });
+          
+          if (audioButton) {
+            audioButton.addEventListener('click', () => {
+              console.log("Audio button clicked");
+              this.toggleAudio();
+            });
+          }
         });
+        
+        // Audio state
+        this.isPlaying = false;
+        this.audioElement = null;
+      },
+      
+      toggleAudio: function() {
+        // Create audio element if it doesn't exist
+        if (!this.audioElement) {
+          this.audioElement = new SpeechSynthesisUtterance(
+            "Wade in Water explores the relationship between water and human existence. " +
+            "Since time immemorial, water has played a vital role in the formation of civilization and trade."
+          );
+          this.audioElement.lang = 'en-US';
+          this.audioElement.onend = () => {
+            this.isPlaying = false;
+            const audioButton = document.querySelector("#audio-button-text");
+            if (audioButton) audioButton.setAttribute("value", "Listen");
+          };
+        }
+        
+        // Toggle audio state
+        this.isPlaying = !this.isPlaying;
+        const audioButtonText = document.querySelector("#audio-button-text");
+        
+        if (this.isPlaying) {
+          speechSynthesis.speak(this.audioElement);
+          if (audioButtonText) audioButtonText.setAttribute("value", "Pause");
+        } else {
+          speechSynthesis.cancel();
+          if (audioButtonText) audioButtonText.setAttribute("value", "Listen");
+        }
       }
     });
 
@@ -38,20 +83,23 @@
       init: function () {
         this.el.addEventListener('targetFound', () => {
           console.log("Artwork detected!");
-           document.querySelector("#info-box").setAttribute("visible", "true");
+          document.querySelector("#info-box").setAttribute("visible", "true");
         });
-
+        
         this.el.addEventListener('targetLost', () => {
           console.log("Artwork lost!");
-         
-          
+          document.querySelector("#info-box").setAttribute("visible", "false");
         });
       }
     });
   </script>
-
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
-
 <body>
   <a-scene
     mindar-image="imageTargetSrc:https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/9.-img-targets.mind?v=1739209316462; 
@@ -64,48 +112,57 @@
     renderer="colorManagement: true, physicallyCorrectLights"
     device-orientation-permission-ui="enabled: false"
   >
-
     <!-- Add Cursor for Clicking -->
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" 
               raycaster="far: 10000; objects: .clickable">
     </a-camera>
-
+    
     <!-- Target Image -->
     <a-entity mindar-image-target="targetIndex: 2" mytarget>
  
-
       <!-- Info Panel -->
-      <a-entity id="info-box" position="-0.5 0 0" visible="true" artwork-info>
+      <a-entity id="info-box" position="0 0 0" visible="false" artwork-info>
+        <!-- Background panel -->
+        <a-plane width="1.2" height="1.5" color="black" position="0 0 -0.01" opacity="0.8" radius="0.05"></a-plane>
         
-        <a-plane width="1.1" height="auto" color="black" position="-0.5 0 0" opacity="1"></a-plane>
-       
-        <a-text value="Title: Wade in Water\n
-                       Artist: Nana Asomani\n
-                       Significance: Wade in Water explores the relationship between water and human 
-                       existence. Since time immemorial, water has played a vital role 
-                       in the formation of civilization and trade."
-                position="-0.4 0 0" align="left"color="white" width="1">
+        <!-- Title and artist -->
+        <a-text value="Wade in Water" position="-0.55 0.6 0" align="left" color="white" width="2" font="kelsonsans"></a-text>
+        <a-text value="by Nana Asomani" position="-0.55 0.45 0" align="left" color="white" width="2" font="kelsonsans"></a-text>
+        
+        <!-- Artwork description -->
+        <a-text value="Significance: Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade."
+                position="-0.55 0.2 0" 
+                align="left"
+                color="white" 
+                width="1.1"
+                wrap-count="30">
         </a-text>
-          
-    
-      </a-entity>
-      
-      <a-entity>
-        <a-image id="ig-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG%20.png?v=1740499993566"
-                 alpha-test="0.5" position="0 -0.8 0" height="0.15" width="0.15">
-                </a-image>
         
-        <a-image id="web-link" class="clickable" 
+        <!-- Social links -->
+        <a-entity position="-0.4 -0.4 0">
+          <!-- Instagram button -->
+          <a-image id="ig-link" class="clickable" 
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG%20.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
+          </a-image>
+          <a-text value="Instagram" position="0.2 0 0" align="left" color="white" width="1"></a-text>
+          
+          <!-- Website button -->
+          <a-image id="web-link" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                 alpha-test="0.5" position="0 -0.8 0" height="0.15" width="0.15">
-                </a-image>
+                 position="0.7 0 0" height="0.15" width="0.15">
+          </a-image>
+          <a-text value="Website" position="0.9 0 0" align="left" color="white" width="1"></a-text>
+        </a-entity>
+        
+        <!-- Audio button (Phase 2) -->
+        <a-entity position="0 -0.6 0">
+          <a-plane id="audio-button" class="clickable" color="#34a853" width="0.5" height="0.15" radius="0.05"></a-plane>
+          <a-text id="audio-button-text" value="Listen" align="center" position="0 0 0.01" color="white" width="2"></a-text>
+        </a-entity>
       </a-entity>
       
-
     </a-entity>
-
   </a-scene>
-
 </body>
 </html>
