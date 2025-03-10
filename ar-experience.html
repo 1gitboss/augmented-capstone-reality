@@ -14,30 +14,45 @@
           const infoPanel = document.querySelector("#info-box");
           const igButton = document.querySelector("#ig-link");
           const webButton = document.querySelector("#web-link");
+          const twitterButton = document.querySelector("#twitter-link");
+          const youtubeButton = document.querySelector("#youtube-link");
           const audioButton = document.querySelector("#audio-button");
           
-          if (!infoPanel || !igButton || !webButton) {
-            console.error("One or more elements are missing.");
-            return;
+          // Make sure objects are interactive and add click events
+          if (igButton) {
+            igButton.classList.add("clickable");
+            igButton.addEventListener('click', () => {
+              console.log("Instagram button clicked");
+              window.open("https://instagram.com/nanaasomani", "_blank");
+            });
           }
           
-          // Make sure objects are interactive
-          igButton.classList.add("clickable");
-          webButton.classList.add("clickable");
-          if (audioButton) audioButton.classList.add("clickable");
+          if (webButton) {
+            webButton.classList.add("clickable");
+            webButton.addEventListener('click', () => {
+              console.log("Website button clicked");
+              window.open("https://example.com/artist", "_blank");
+            });
+          }
           
-          // Add click listeners
-          igButton.addEventListener('click', () => {
-            console.log("Instagram button clicked");
-            window.open("https://instagram.com/as0maniii", "_blank");
-          });
+          if (twitterButton) {
+            twitterButton.classList.add("clickable");
+            twitterButton.addEventListener('click', () => {
+              console.log("Twitter button clicked");
+              window.open("https://twitter.com/nanaasomani", "_blank");
+            });
+          }
           
-          webButton.addEventListener('click', () => {
-            console.log("Website button clicked");
-            window.open("https://nanaasomani.com/", "_blank");
-          });
+          if (youtubeButton) {
+            youtubeButton.classList.add("clickable");
+            youtubeButton.addEventListener('click', () => {
+              console.log("YouTube button clicked");
+              window.open("https://youtube.com/c/nanaasomani", "_blank");
+            });
+          }
           
           if (audioButton) {
+            audioButton.classList.add("clickable");
             audioButton.addEventListener('click', () => {
               console.log("Audio button clicked");
               this.toggleAudio();
@@ -120,43 +135,65 @@
     <!-- Target Image -->
     <a-entity mindar-image-target="targetIndex: 2" mytarget>
  
-      <!-- Info Panel -->
-      <a-entity id="info-box" position="0 0 0" visible="false" artwork-info>
+      <!-- Info Panel - Positioned to the right side of the artwork -->
+      <a-entity id="info-box" position="1.3 0 0" visible="false" artwork-info>
         <!-- Background panel -->
-        <a-plane width="1.2" height="1.5" color="black" position="-0.5 0 0" opacity="0.5" radius="0.05"></a-plane>
+        <a-plane width="1.2" height="1.8" color="black" position="0 0 -0.01" opacity="0.8" radius="0.05"></a-plane>
         
         <!-- Title and artist -->
-        <a-text value="Wade in Water" position="-0.55 0.6 0" align="left" color="white" width="1" font="kelsonsans"></a-text>
-        <a-text value="by Nana Asomani" position="-0.55 0.45 0" align="left" color="white" width="1" font="kelsonsans"></a-text>
+        <a-text value="Wade in Water" position="-0.55 0.75 0" align="left" color="white" width="2" font="kelsonsans"></a-text>
+        <a-text value="by Nana Asomani" position="-0.55 0.6 0" align="left" color="white" width="2" font="kelsonsans"></a-text>
         
         <!-- Artwork description -->
         <a-text value="Significance: Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade."
-                position="-0.55 0.2 0" 
+                position="-0.55 0.35 0" 
                 align="left"
                 color="white" 
                 width="1.1"
                 wrap-count="30">
         </a-text>
         
-        <!-- Social links -->
-        <a-entity position="-0.4 -0.4 0">
+        <!-- Social links - organized in a vertical column -->
+        <a-entity position="-0.5 -0.1 0">
           <!-- Instagram button -->
-          <a-image id="ig-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG%20.png?v=1740499993566"
-                 position="0 0 0" height="0.15" width="0.15">
-          </a-image>
-          <a-text value="Instagram" position="0.2 0 0" align="left" color="white" width="1"></a-text>
+          <a-entity position="0 0 0">
+            <a-image id="ig-link" class="clickable" 
+                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG%20.png?v=1740499993566"
+                   position="0 0 0" height="0.15" width="0.15">
+            </a-image>
+            <a-text value="Instagram" position="0.25 0 0" align="left" color="white" width="1"></a-text>
+          </a-entity>
           
           <!-- Website button -->
-          <a-image id="web-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/world-wide-web.png?v=1741603179342"
-                 position="0.7 0 0" height="0.15" width="0.15">
-          </a-image>
-          <a-text value="Website" position="0.9 0 0" align="left" color="white" width="1"></a-text>
+          <a-entity position="0 -0.2 0">
+            <a-image id="web-link" class="clickable" 
+                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                   position="0 0 0" height="0.15" width="0.15">
+            </a-image>
+            <a-text value="Website" position="0.25 0 0" align="left" color="white" width="1"></a-text>
+          </a-entity>
+          
+          <!-- Twitter button (new) -->
+          <a-entity position="0 -0.4 0">
+            <a-image id="twitter-link" class="clickable" 
+                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                   position="0 0 0" height="0.15" width="0.15">
+            </a-image>
+            <a-text value="Twitter" position="0.25 0 0" align="left" color="white" width="1"></a-text>
+          </a-entity>
+          
+          <!-- YouTube button (new) -->
+          <a-entity position="0 -0.6 0">
+            <a-image id="youtube-link" class="clickable" 
+                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                   position="0 0 0" height="0.15" width="0.15">
+            </a-image>
+            <a-text value="YouTube" position="0.25 0 0" align="left" color="white" width="1"></a-text>
+          </a-entity>
         </a-entity>
         
-        <!-- Audio button (Phase 2) -->
-        <a-entity position="0 -0.6 0">
+        <!-- Audio button -->
+        <a-entity position="0 -0.8 0">
           <a-plane id="audio-button" class="clickable" color="#34a853" width="0.5" height="0.15" radius="0.05"></a-plane>
           <a-text id="audio-button-text" value="Listen" align="center" position="0 0 0.01" color="white" width="2"></a-text>
         </a-entity>
