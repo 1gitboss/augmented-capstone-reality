@@ -5,103 +5,123 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <script>
     AFRAME.registerComponent('artwork-info', {
-      init: function () {
-        // State for info panel
-        this.showingMoreInfo = false;
-        
-        // Wait for scene to load
-        this.el.sceneEl.addEventListener('loaded', () => { 
-          console.log("A-Frame Loaded!");
+  schema: {
+    targetIndex: {type: 'number', default: 0}
+  },
+  
+  init: function () {
+    // State for info panel
+    this.showingMoreInfo = false;
+    
+    // Get target index from the mindar-image-target entity
+    const targetEl = this.el.closest('[mindar-image-target]');
+    if (targetEl) {
+      this.data.targetIndex = targetEl.getAttribute('mindar-image-target').targetIndex;
+      console.log(`Target index: ${this.data.targetIndex}`);
+    }
+    
+    // Audio narrations for different artworks
+    this.narrations = {
+      0: "First artwork description. This is the narration for target index 0.",
+      1: "Second artwork description. This narration plays for target with index 1.",
+      2: "Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade.",
+      3: "Fourth artwork description. This would be the narration for another piece in your collection."
+    };
+    
+    // Wait for scene to load
+    this.el.sceneEl.addEventListener('loaded', () => { 
+      console.log("A-Frame Loaded!");
+      
+      // Get elements
+      const igButton = document.querySelector("#ig-link");
+      const webButton = document.querySelector("#web-link");
+      const twitterButton = document.querySelector("#twitter-link");
+      const youtubeButton = document.querySelector("#youtube-link");
+      const audioButton = document.querySelector("#audio-button");
+      const infoButton = document.querySelector("#more-info-button");
+      const infoPanel = document.querySelector("#expanded-info");
+      
+      // Set up social media buttons
+      this.setupButton(igButton, "https://instagram.com/nanaasomani");
+      this.setupButton(webButton, "https://example.com/artist");
+      this.setupButton(twitterButton, "https://twitter.com/nanaasomani");
+      this.setupButton(youtubeButton, "https://youtube.com/c/nanaasomani");
+      
+      // Set up audio button
+      if (audioButton) {
+        audioButton.classList.add("clickable");
+        audioButton.addEventListener('click', () => {
+          console.log("Audio button clicked");
+          this.toggleAudio();
+        });
+      }
+      
+      // Set up more info button
+      if (infoButton && infoPanel) {
+        infoButton.classList.add("clickable");
+        infoButton.addEventListener('click', () => {
+          console.log("More info button clicked");
+          this.showingMoreInfo = !this.showingMoreInfo;
           
-          // Get elements
-          const igButton = document.querySelector("#ig-link");
-          const webButton = document.querySelector("#web-link");
-          const twitterButton = document.querySelector("#twitter-link");
-          const youtubeButton = document.querySelector("#youtube-link");
-          const audioButton = document.querySelector("#audio-button");
-          const infoButton = document.querySelector("#more-info-button");
-          const infoPanel = document.querySelector("#expanded-info");
+          // Toggle visibility
+          infoPanel.setAttribute('visible', this.showingMoreInfo);
           
-          // Set up social media buttons
-          this.setupButton(igButton, "https://instagram.com/nanaasomani");
-          this.setupButton(webButton, "https://example.com/artist");
-          this.setupButton(twitterButton, "https://twitter.com/nanaasomani");
-          this.setupButton(youtubeButton, "https://youtube.com/c/nanaasomani");
-          
-          // Set up audio button
-          if (audioButton) {
-            audioButton.classList.add("clickable");
-            audioButton.addEventListener('click', () => {
-              console.log("Audio button clicked");
-              this.toggleAudio();
-            });
-          }
-          
-          // Set up more info button
-          if (infoButton && infoPanel) {
-            infoButton.classList.add("clickable");
-            infoButton.addEventListener('click', () => {
-              console.log("More info button clicked");
-              this.showingMoreInfo = !this.showingMoreInfo;
-              
-              // Toggle visibility
-              infoPanel.setAttribute('visible', this.showingMoreInfo);
-              
-              // Change button text
-              const infoButtonText = document.querySelector("#more-info-text");
-              if (infoButtonText) {
-                infoButtonText.setAttribute('value', this.showingMoreInfo ? 'Hide Info' : 'More Info');
-              }
-            });
+          // Change button text
+          const infoButtonText = document.querySelector("#more-info-text");
+          if (infoButtonText) {
+            infoButtonText.setAttribute('value', this.showingMoreInfo ? 'Hide Info' : 'More Info');
           }
         });
-        
-        // Audio state
-        this.isPlaying = false;
-        this.audioElement = null;
-      },
-      
-      setupButton: function(button, url) {
-        if (button) {
-          button.classList.add("clickable");
-          button.addEventListener('click', () => {
-            console.log("Button clicked: " + url);
-            window.open(url, "_blank");
-          });
-        }
-      },
-      
-      toggleAudio: function() {
-        // Create audio element if it doesn't exist
-        if (!this.audioElement) {
-          this.audioElement = new SpeechSynthesisUtterance(
-            "Wade in Water explores the relationship between water and human existence. " +
-            "Since time immemorial, water has played a vital role in the formation of civilization and trade."
-          );
-          this.audioElement.lang = 'en-US';
-          this.audioElement.onend = () => {
-            this.isPlaying = false;
-            const audioButton = document.querySelector("#audio-button-pic");
-            if (audioButton) audioButton.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
-          };
-        }
-        
-        // Toggle audio state
-        this.isPlaying = !this.isPlaying;
-        // const audioButtonText = document.querySelector("#audio-button-text");
-        const audioButtonPic = document.querySelector("#audio-button-pic");
-        
-        if (this.isPlaying) {
-          speechSynthesis.speak(this.audioElement);
-          // if (audioButtonText) audioButtonText.setAttribute("value", "Pause");
-          if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
-        } else {
-          speechSynthesis.cancel();
-          // if (audioButtonText) audioButtonText.setAttribute("value", "Play Audio");
-          if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
-        }
       }
     });
+    
+    // Audio state
+    this.isPlaying = false;
+    this.audioElement = null;
+  },
+  
+  setupButton: function(button, url) {
+    if (button) {
+      button.classList.add("clickable");
+      button.addEventListener('click', () => {
+        console.log("Button clicked: " + url);
+        window.open(url, "_blank");
+      });
+    }
+  },
+  
+  toggleAudio: function() {
+    // Cancel any currently playing speech
+    speechSynthesis.cancel();
+    
+    // Create audio element if it doesn't exist
+    if (!this.audioElement) {
+      this.audioElement = new SpeechSynthesisUtterance();
+      this.audioElement.lang = 'en-US';
+      this.audioElement.onend = () => {
+        this.isPlaying = false;
+        const audioButtonPic = document.querySelector("#audio-button-pic");
+        if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+      };
+    }
+    
+    // Get narration based on target index
+    const narration = this.narrations[this.data.targetIndex] || "No description available for this artwork.";
+    this.audioElement.text = narration;
+    
+    // Toggle audio state
+    this.isPlaying = !this.isPlaying;
+    const audioButtonPic = document.querySelector("#audio-button-pic");
+    
+    if (this.isPlaying) {
+      speechSynthesis.speak(this.audioElement);
+      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
+    } else {
+      speechSynthesis.cancel();
+      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+    }
+  }
+});
 
     AFRAME.registerComponent('mytarget', {
       init: function () {
