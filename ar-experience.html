@@ -151,16 +151,17 @@
 </head>
 <body>
   <a-scene
-    mindar-image="imageTargetSrc:https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/9.-img-targets.mind?v=1739209316462; 
-    filterMinCF: 0.5; 
-    filterBeta: 10; 
-    missTolerance: 5; 
-    warmupTolerance: 5"
-    vr-mode-ui="enabled: false"
-    color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
-    device-orientation-permission-ui="enabled: false"
-  >
+  mindar-image="imageTargetSrc:https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/9.-img-targets.mind?v=1739209316462; 
+  filterMinCF: 0.1; 
+  filterBeta: 1000;  
+  missTolerance: 10; 
+  warmupTolerance: 10; 
+  useSmoothing: true" 
+  vr-mode-ui="enabled: false"
+  color-space="sRGB"
+  renderer="colorManagement: true, physicallyCorrectLights"
+  device-orientation-permission-ui="enabled: false"
+>
     <!-- Add Cursor for Clicking -->
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" 
               raycaster="far: 10000; objects: .clickable">
@@ -211,7 +212,7 @@
             <!-- put play icon here-->
             <a-image id="audio-button-pic" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position "0 0 0.01" height="0.15" width="0.15">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
 <!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
