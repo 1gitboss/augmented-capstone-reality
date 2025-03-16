@@ -4,6 +4,47 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <script>
+    
+AFRAME.registerComponent('smooth-position', {
+  schema: {
+    factor: { type: 'number', default: 0.2 }
+  },
+  
+  init: function() {
+    this.targetPosition = new THREE.Vector3();
+    this.currentPosition = new THREE.Vector3();
+    this.isTracking = false;
+    
+    // Listen for target found/lost events
+    const targetEntity = this.el.closest('[mindar-image-target]');
+    if (targetEntity) {
+      targetEntity.addEventListener('targetFound', () => {
+        this.isTracking = true;
+        // Get initial position
+        this.targetPosition.copy(this.el.object3D.position);
+        this.currentPosition.copy(this.el.object3D.position);
+      });
+      
+      targetEntity.addEventListener('targetLost', () => {
+        this.isTracking = false;
+      });
+    }
+  },
+  
+  tick: function() {
+    if (!this.isTracking) return;
+    
+    // Get the current target position
+    this.targetPosition.copy(this.el.object3D.position);
+    
+    // Apply smoothing
+    this.currentPosition.lerp(this.targetPosition, this.data.factor);
+    
+    // Update the position
+    this.el.object3D.position.copy(this.currentPosition);
+  }
+});
+    
     AFRAME.registerComponent('artwork-info', {
   schema: {
     targetIndex: {type: 'number', default: 0}
