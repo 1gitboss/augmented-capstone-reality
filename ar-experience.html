@@ -164,24 +164,38 @@ AFRAME.registerComponent('smooth-position', {
   }
 });
 
-    AFRAME.registerComponent('mytarget', {
-      init: function () {
-        this.el.addEventListener('targetFound', () => {
-          console.log("Artwork detected!");
-          document.querySelector("#title-panel").setAttribute("visible", "true");
-          document.querySelector("#controls-panel").setAttribute("visible", "true");
-          // Hide expanded info by default when target is found
-          document.querySelector("#expanded-info").setAttribute("visible", "false");
-        });
-        
-        this.el.addEventListener('targetLost', () => {
-          console.log("Artwork lost!");
-          document.querySelector("#title-panel").setAttribute("visible", "false");
-          document.querySelector("#controls-panel").setAttribute("visible", "false");
-          document.querySelector("#expanded-info").setAttribute("visible", "false");
-        });
+   AFRAME.registerComponent('mytarget', {
+  init: function () {
+    let visibilityTimeout = null;
+    
+    this.el.addEventListener('targetFound', () => {
+      console.log("Artwork detected!");
+      
+      // Clear any hiding timeout
+      if (visibilityTimeout) {
+        clearTimeout(visibilityTimeout);
+        visibilityTimeout = null;
       }
+      
+      // Show the elements
+      document.querySelector("#title-panel").setAttribute("visible", "true");
+      document.querySelector("#controls-panel").setAttribute("visible", "true");
+      // Hide expanded info by default when target is found
+      document.querySelector("#expanded-info").setAttribute("visible", "false");
     });
+    
+    this.el.addEventListener('targetLost', () => {
+      console.log("Artwork lost!");
+      
+      // Add a small delay before hiding to prevent flickering during momentary tracking loss
+      visibilityTimeout = setTimeout(() => {
+        document.querySelector("#title-panel").setAttribute("visible", "false");
+        document.querySelector("#controls-panel").setAttribute("visible", "false");
+        document.querySelector("#expanded-info").setAttribute("visible", "false");
+      }, 300); // 300ms delay before hiding elements
+    });
+  }
+});
   </script>
   <style>
     body {
