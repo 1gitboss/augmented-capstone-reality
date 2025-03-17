@@ -47,6 +47,29 @@ AFRAME.registerComponent('smooth-position', {
   }
 });
     
+    
+    
+    AFRAME.registerComponent('dynamic-ui', {
+  schema: {
+    targetIndex: { type: 'int' }
+  },
+  init: function() {
+    const targetIndex = this.data.targetIndex;
+
+    // Assign unique IDs per artwork
+    this.titlePanelId = `title-panel-${targetIndex}`;
+    this.controlsPanelId = `controls-panel-${targetIndex}`;
+    
+    // Apply unique IDs
+    const titlePanel = this.el.querySelector('.title-panel');
+    if (titlePanel) titlePanel.id = this.titlePanelId;
+
+    const controlsPanel = this.el.querySelector('.controls-panel');
+    if (controlsPanel) controlsPanel.id = this.controlsPanelId;
+  }
+});
+
+    
     AFRAME.registerComponent('artwork-info', {
   schema: {
     targetIndex: {type: 'number', default: 0}
