@@ -3,8 +3,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  <!-- Abena TTS Script -->
-  <script src="https://abena.mobobi.com/playground/tts/js/tts-embed.js"></script>
+  <!-- 1. Add Abena TTS Script -->
+<script src="https://abena.mobobi.com/playground/tts/js/tts-embed.js"></script>
   <script>
     
 AFRAME.registerComponent('smooth-position', {
@@ -47,29 +47,6 @@ AFRAME.registerComponent('smooth-position', {
   }
 });
     
-    
-    
-    AFRAME.registerComponent('dynamic-ui', {
-  schema: {
-    targetIndex: { type: 'int' }
-  },
-  init: function() {
-    const targetIndex = this.data.targetIndex;
-
-    // Assign unique IDs per artwork
-    this.titlePanelId = `title-panel-${targetIndex}`;
-    this.controlsPanelId = `controls-panel-${targetIndex}`;
-    
-    // Apply unique IDs
-    const titlePanel = this.el.querySelector('.title-panel');
-    if (titlePanel) titlePanel.id = this.titlePanelId;
-
-    const controlsPanel = this.el.querySelector('.controls-panel');
-    if (controlsPanel) controlsPanel.id = this.controlsPanelId;
-  }
-});
-
-    
     AFRAME.registerComponent('artwork-info', {
   schema: {
     targetIndex: {type: 'number', default: 0}
@@ -86,103 +63,13 @@ AFRAME.registerComponent('smooth-position', {
       console.log(`Target index: ${this.data.targetIndex}`);
     }
     
-    // Artwork data
-    this.artworkData = [
-      {
-        title: "The Presence",
-        artist: "Nana Asomani",
-        description: "The Presence is a photography project that explores the relationship between humans and the idea of a 'higher spiritual presence' in our lives. In a country like Ghana which is heavily religious, a lot of people base their decision making on the influence of a 'higher' intangible power which serves as a guide to them.",
-        location: "Haatso, Accra",
-        inspiration: "It is inspired by the use of the halos in movies and animations to represent spirituality and 'heavenly beings'.",
-        created: "2023"
-      },
-      {
-        title: "Otema",
-        artist: "Nana Asomani",
-        description: "Otema is essentially an ode to my friend Otema (subject of the image) celebrating her strength and growth especially in the tech space.",
-        location: "Ridge, Accra",
-        inspiration: "The idea was to play with the subject being backlit with natural light through a glass to show strength.",
-        created: "2023"
-      },
-      {
-        title: "Reflection",
-        artist: "Nana Asomani",
-        description: "Reflection explores the need as human being to ponder over life decision and experiences to better shape our existence.",
-        location: "Military Range, Teshie, Accra",
-        inspiration: "The mirror is the one tool that allows us to literally and metaphorically view ourselves.",
-        created: "2023"
-      },
-      {
-        title: "In her void",
-        artist: "Nana Asomani",
-        description: "In her void highlights the strength of women in a predominantly male dominated society. This sometimes isolate women in decision making however their unique strengths shine through.",
-        location: "Osu, Accra",
-        inspiration: "The use of contrast and light plays an important part of my photography to evoke emotion and show solitude as seen in this image.",
-        created: "2023"
-      },
-      {
-        title: "Wade in Water",
-        artist: "Nana Asomani",
-        description: "Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade.",
-        location: "Weija, Accra",
-        inspiration: "My personal love for water and our relationship with it inspired this shoot.",
-        created: "2023"
-      },
-      {
-        title: "Beige Tones: Concealed Identity",
-        artist: "Nana Asomani",
-        description: "This shoot explores the interaction between brown tones and the human physique. In our part of the world, the colour brown plays a pivotal role in our culture from our skin to our landscapes.",
-        location: "Military Range, Teshie, Accra",
-        inspiration: "The idea simply was to conceal the subject by placing her directly in front of the source of light to create a silhouette.",
-        created: "2023"
-      },
-      {
-        title: "Ajabeng",
-        artist: "Nana Asomani",
-        description: "Ajabeng was shot during a fitting for the collaboration between Ajabeng x Okuntakinte.",
-        location: "La, Accra",
-        inspiration: "Alignment and symmetrical movement makes for great viewing in any art piece.",
-        created: "2023"
-      },
-      {
-        title: "Nsuo mu Nsem",
-        artist: "Nana Asomani",
-        description: "Nsuo mu Nsem, similar to Wade in water, explores the relationship between humans and water but this touches more on the spiritual impact of the element. This project was in collaboration with another photographer Joseph Awumee.",
-        location: "Sakumono, Accra",
-        inspiration: "The shot particular draws inspiration to the 1803 Igbo landings where rebellious slaves in their bid to resist slaves marched into water and committed mass suicide.",
-        created: "2023"
-      },
-      {
-        title: "Ocean view",
-        artist: "Nana Asomani",
-        description: "Ocean view is essentially an interplay of light and shadow on the human physique with the ocean serving as a backdrop.",
-        location: "Military Range, Teshie, Accra",
-        inspiration: "Similar to Wade in Water, my love for water and how it shapes our lives influenced this shoot.",
-        created: "2023"
-      },
-      {
-        title: "Extra terrestrial Presence",
-        artist: "Nana Asomani",
-        description: "Extra terrestrial Presence similar to The Presence tries to explore the idea of life and the 'influence' of external intangible forces be it spiritual, supernatural or even paranormal.",
-        location: "North Kaneshie, Accra",
-        inspiration: "The ring light is one tool that has started a lot of narratives and carries its own story through the life of its owners.",
-        created: "2023"
-      },
-      {
-        title: "Tranquil tones",
-        artist: "Nana Asomani",
-        description: "Tranquil tones essentially pays homage to nature and how it is an extension of our lives and pays an important role in our existence.",
-        location: "Oyarifa, Accra",
-        inspiration: "The green and blue tones of this image was inspired by the surrounding nature of the location.",
-        created: "2023"
-      }
-    ];
-    
-    // Audio narrations for different artworks - populate from the artwork data
-    this.narrations = {};
-    this.artworkData.forEach((artwork, index) => {
-      this.narrations[index] = artwork.description;
-    });
+    // Audio narrations for different artworks
+    this.narrations = {
+      0: "First artwork description. This is the narration for target index 0.",
+      1: "Second artwork description. This narration plays for target with index 1.",
+      2: "Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade.",
+      3: "Fourth artwork description. This would be the narration for another piece in your collection."
+    };
     
     // Wait for scene to load
     this.el.sceneEl.addEventListener('loaded', () => { 
@@ -229,36 +116,11 @@ AFRAME.registerComponent('smooth-position', {
           }
         });
       }
-      
-      // Update artwork info based on target index
-      this.updateArtworkInfo();
     });
     
     // Audio state
     this.isPlaying = false;
     this.audioElement = null;
-  },
-  
-  updateArtworkInfo: function() {
-    const targetIndex = this.data.targetIndex;
-    const artwork = this.artworkData[targetIndex];
-    
-    if (!artwork) return;
-    
-    // Update title and artist
-    const titleText = document.querySelector("#title-text");
-    const artistText = document.querySelector("#artist-text");
-    if (titleText) titleText.setAttribute('value', artwork.title);
-    if (artistText) artistText.setAttribute('value', `by ${artwork.artist}`);
-    
-    // Update expanded info
-    const locationText = document.querySelector("#location-text");
-    const inspirationText = document.querySelector("#inspiration-text");
-    const createdText = document.querySelector("#created-text");
-    
-    if (locationText) locationText.setAttribute('value', `Location: ${artwork.location}`);
-    if (inspirationText) inspirationText.setAttribute('value', `Inspiration: ${artwork.inspiration}`);
-    if (createdText) createdText.setAttribute('value', `Created: ${artwork.created}`);
   },
   
   setupButton: function(button, url) {
@@ -272,28 +134,35 @@ AFRAME.registerComponent('smooth-position', {
   },
   
   toggleAudio: function() {
-    const targetIndex = this.data.targetIndex;
-    const narration = this.narrations[targetIndex];  // Get narration text for this artwork
-
-    if (typeof AbenaVoice !== 'undefined') {
-      if (this.isPlaying) {
-        AbenaVoice.stop();
+    // Cancel any currently playing speech
+    speechSynthesis.cancel();
+    
+    // Create audio element if it doesn't exist
+    if (!this.audioElement) {
+      this.audioElement = new SpeechSynthesisUtterance();
+      this.audioElement.lang = 'en-US';
+      this.audioElement.onend = () => {
         this.isPlaying = false;
-      } else {
-        AbenaVoice.speak(narration);
-        this.isPlaying = true;
-      }
-    } else {
-      // Fallback to Speech Synthesis
-      let msg = new SpeechSynthesisUtterance(narration);
-      msg.voice = speechSynthesis.getVoices().find(voice => voice.name.includes("Google"));
-      speechSynthesis.speak(msg);
+        const audioButtonPic = document.querySelector("#audio-button-pic");
+        if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+      };
     }
-
-    // Update button UI
-    document.querySelector(`#audio-button-pic-${targetIndex}`).setAttribute(
-      "src", this.isPlaying ? "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643" : "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-    );
+    
+    // Get narration based on target index
+    const narration = this.narrations[this.data.targetIndex] || "No description available for this artwork.";
+    this.audioElement.text = narration;
+    
+    // Toggle audio state
+    this.isPlaying = !this.isPlaying;
+    const audioButtonPic = document.querySelector("#audio-button-pic");
+    
+    if (this.isPlaying) {
+      speechSynthesis.speak(this.audioElement);
+      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
+    } else {
+      speechSynthesis.cancel();
+      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+    }
   }
 });
 
@@ -315,12 +184,6 @@ AFRAME.registerComponent('smooth-position', {
       document.querySelector("#controls-panel").setAttribute("visible", "true");
       // Hide expanded info by default when target is found
       document.querySelector("#expanded-info").setAttribute("visible", "false");
-      
-      // Update artwork info
-      const artworkInfo = this.el.components['artwork-info'];
-      if (artworkInfo) {
-        artworkInfo.updateArtworkInfo();
-      }
     });
     
     this.el.addEventListener('targetLost', () => {
@@ -345,7 +208,7 @@ AFRAME.registerComponent('smooth-position', {
 </head>
 <body>
   <a-scene
-  mindar-image="imageTargetSrc:https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/final-targets.mind?v=1742218624812; 
+  mindar-image="imageTargetSrc:https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/9.-img-targets.mind?v=1739209316462; 
   filterMinCF: 0.1; 
   filterBeta: 1000;  
   missTolerance: 10; 
@@ -361,15 +224,14 @@ AFRAME.registerComponent('smooth-position', {
               raycaster="far: 10000; objects: .clickable">
     </a-camera>
     
-    <!-- Target Images - Creating one for each artwork in the collection -->
-    <!-- Target 0: The Presence -->
-    <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info>
-      <!-- Dynamic Info Panels will be updated by the artwork-info component -->
+    <!-- Target Image -->
+    <a-entity mindar-image-target="targetIndex: 2" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
-        <a-text id="title-text" value="The Presence" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
-        <a-text id="artist-text" value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
+        <a-text value="Wade in Water" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
+        <a-text value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
       </a-entity>
       
       <!-- Controls Panel at the Bottom -->
@@ -409,6 +271,7 @@ AFRAME.registerComponent('smooth-position', {
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
                      position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
@@ -423,117 +286,28 @@ AFRAME.registerComponent('smooth-position', {
       <!-- Expanded Info Panel (Initially Hidden) -->
       <a-entity id="expanded-info" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
         <a-plane width="0.9" height="0.7" color="black" opacity="0.85" radius="0.05"></a-plane>
-        <a-text id="location-text" value="Location: Haatso, Accra" 
+        <a-text value="Location: Weija, Accra" 
                 position="0 0.25 0.01" 
                 align="center" 
                 color="white" 
                 width="0.8">
         </a-text>
-        <a-text id="inspiration-text" value="Inspiration: It is inspired by the use of the halos in movies and animations to represent spirituality and 'heavenly beings'."
+        <a-text value="Inspiration: This piece was inspired by the artist's personal love for water and our relationship with it."
                 position="0 0 0.01" 
                 align="center"
                 color="white" 
                 width="0.8"
                 wrap-count="25">
         </a-text>
-        <a-text id="created-text" value="Created: 2023"
+        <a-text value="Created: 2023"
                 position="0 -0.3 0.01" 
                 align="center"
                 color="white" 
                 width="0.8">
         </a-text>
       </a-entity>
-    </a-entity>
-    
-    <!-- Repeat for other targets (1-10) -->
-    <!-- For brevity, we'll just define one more target as an example -->
-    <!-- Target 4: Wade in Water -->
-    <a-entity mindar-image-target="targetIndex: 4" mytarget artwork-info>
-      <!-- The content is the same as above but will be dynamically updated by the artwork-info component -->
-      <a-entity id="title-panel" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
-        <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
-        <a-text id="title-text" value="Wade in Water" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
-        <a-text id="artist-text" value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
-      </a-entity>
       
-      <a-entity id="controls-panel" position="0 -0.8 0" visible="false" smooth-position="factor: 0.1">
-        <a-plane width="1.2" height="0.5" color="black" opacity="0.7" radius="0.05"></a-plane>
-        
-        <a-entity position="-0.25 -0.1 0.01">
-          <a-image id="ig-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                 position="0 0 0" height="0.15" width="0.15">
-          </a-image>
-          
-          <a-image id="web-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                 position="0.2 0 0" height="0.15" width="0.15">
-          </a-image>
-          
-          <a-image id="twitter-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                 position="0.4 0 0" height="0.15" width="0.15">
-          </a-image>
-          
-          <a-image id="youtube-link" class="clickable" 
-                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                 position="0.6 0 0" height="0.15" width="0.15">
-          </a-image>
-        </a-entity>
-        
-        <a-entity position="0 0.1 0.01">
-          <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
-            <a-image id="audio-button-pic" 
-                     src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position= "0 0 0.01" height="0.15" width="0.15">
-            </a-image>
-          </a-entity>
-          
-          <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
-            <a-text id="more-info-text" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
-          </a-entity>
-        </a-entity>
-      </a-entity>
-      
-      <a-entity id="expanded-info" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
-        <a-plane width="0.9" height="0.7" color="black" opacity="0.85" radius="0.05"></a-plane>
-        <a-text id="location-text" value="Location: Weija, Accra" 
-                position="0 0.25 0.01" 
-                align="center" 
-                color="white" 
-                width="0.8">
-        </a-text>
-        <a-text id="inspiration-text" value="Inspiration: My personal love for water and our relationship with it inspired this shoot."
-                position="0 0 0.01" 
-                align="center"
-                color="white" 
-                width="0.8"
-                wrap-count="25">
-        </a-text>
-        <a-text id="created-text" value="Created: 2023"
-                position="0 -0.3 0.01" 
-                align="center"
-                color="white" 
-                width="0.8">
-        </a-text>
-      </a-entity>
     </a-entity>
-    
-    <!-- Similar entities would be created for each artwork target -->
-    
   </a-scene>
-  
-  <!-- Optional: Add Abena TTS initialization if needed -->
-  <script>
-    // Initialize Abena TTS when available
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof AbenaVoice !== 'undefined') {
-        console.log("Initializing Abena TTS...");
-        // Any initialization code for Abena TTS would go here
-      }
-    });
-  </script>
 </body>
 </html>
