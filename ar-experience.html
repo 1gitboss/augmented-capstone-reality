@@ -84,13 +84,13 @@ AFRAME.registerComponent('smooth-position', {
       console.log("A-Frame Loaded!");
       
       // Get elements
-      const igButton = document.querySelector("#ig-link");
-      const webButton = document.querySelector("#web-link");
-      const twitterButton = document.querySelector("#twitter-link");
-      const youtubeButton = document.querySelector("#youtube-link");
-      const audioButton = document.querySelector("#audio-button");
-      const infoButton = document.querySelector("#more-info-button");
-      const infoPanel = document.querySelector("#expanded-info");
+      const igButton = document.querySelector(`#ig-link-${targetIndex}`);
+      const webButton = document.querySelector(`#web-link-${targetIndex}`);
+      const twitterButton = document.querySelector(`#twitter-link-${targetIndex}`);
+      const youtubeButton = document.querySelector(`#youtube-link-${targetIndex}`);
+      const audioButton = document.querySelector(`#audio-button-${targetIndex}`);
+      const infoButton = document.querySelector(`#more-info-button-${targetIndex}`);
+      const infoPanel = document.querySelector(`#expanded-info-${targetIndex}`);
       
       // Set up social media buttons
       this.setupButton(igButton, "https://www.instagram.com/as0maniii/");
@@ -178,31 +178,36 @@ AFRAME.registerComponent('smooth-position', {
   init: function () {
     let visibilityTimeout = null;
     
-    this.el.addEventListener('targetFound', () => {
+        this.el.addEventListener('targetFound', () => {
       console.log("Artwork detected!");
-      
+
       // Clear any hiding timeout
       if (visibilityTimeout) {
         clearTimeout(visibilityTimeout);
         visibilityTimeout = null;
       }
-      
-      // Show the elements
-      document.querySelector("#title-panel").setAttribute("visible", "true");
-      document.querySelector("#controls-panel").setAttribute("visible", "true");
-      // Hide expanded info by default when target is found
-      document.querySelector("#expanded-info").setAttribute("visible", "false");
+
+      // Get the target index
+      const targetIndex = this.el.getAttribute('mindar-image-target').targetIndex;
+
+      // Show the elements with the correct IDs
+      document.querySelector(`#title-panel-${targetIndex}`).setAttribute("visible", "true");
+      document.querySelector(`#controls-panel-${targetIndex}`).setAttribute("visible", "true");
+      document.querySelector(`#expanded-info-${targetIndex}`).setAttribute("visible", "false");
     });
-    
+
     this.el.addEventListener('targetLost', () => {
       console.log("Artwork lost!");
-      
-      // Add a small delay before hiding to prevent flickering during momentary tracking loss
+
+      // Get the target index
+      const targetIndex = this.el.getAttribute('mindar-image-target').targetIndex;
+
+      // Add a small delay before hiding
       visibilityTimeout = setTimeout(() => {
-        document.querySelector("#title-panel").setAttribute("visible", "false");
-        document.querySelector("#controls-panel").setAttribute("visible", "false");
-        document.querySelector("#expanded-info").setAttribute("visible", "false");
-      }, 300); // 300ms delay before hiding elements
+        document.querySelector(`#title-panel-${targetIndex}`).setAttribute("visible", "false");
+        document.querySelector(`#controls-panel-${targetIndex}`).setAttribute("visible", "false");
+        document.querySelector(`#expanded-info-${targetIndex}`).setAttribute("visible", "false");
+      }, 300);
     });
   }
 });
@@ -236,7 +241,7 @@ AFRAME.registerComponent('smooth-position', {
     <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info>
  
       <!-- Title Panel at the Top -->
-      <a-entity id="title-panel" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="title-panel-0" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
         <a-text value="The Presence" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
         <a-text value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
