@@ -76,7 +76,7 @@ AFRAME.registerComponent('smooth-position', {
       8: "Ocean view is essentially an interplay of light and shadow on the human physique with the ocean serving as a backdrop.",
       9: "Extra terrestrial Presence similar to The Presence tries to explore the idea of life and the 'influence' of external intangible forces be it spiritual, supernatural or even paranormal.",
       10: "Tranquil tones essentially pays homage to nature and how it is an extension of our lives and pays an important role in our existence.",
-      11: "Fourth artwork description. This would be the narration for another piece in your collection."
+      // 11: "Fourth artwork description. This would be the narration for another piece in your collection."
     };
     
     // Wait for scene to load
@@ -225,8 +225,7 @@ AFRAME.registerComponent('smooth-position', {
   filterMinCF: 0.1; 
   filterBeta: 1000;  
   missTolerance: 10; 
-  warmupTolerance: 10; 
-  useSmoothing: true" 
+  warmupTolerance: 10;" 
   vr-mode-ui="enabled: false"
   color-space="sRGB"
   renderer="colorManagement: true, physicallyCorrectLights"
@@ -979,7 +978,7 @@ AFRAME.registerComponent('smooth-position', {
       </a-entity>
       
       <!-- Expanded Info Panel (Initially Hidden) -->
-      <a-entity id="expanded-info" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="expanded-info-8" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
         <a-plane width="0.9" height="0.7" color="black" opacity="0.85" radius="0.05"></a-plane>
         <a-text value="Location: Military Range, Teshie, Accra" 
                 position="0 0.25 0.01" 
@@ -1009,34 +1008,34 @@ AFRAME.registerComponent('smooth-position', {
     <a-entity mindar-image-target="targetIndex: 9" mytarget artwork-info>
  
       <!-- Title Panel at the Top -->
-      <a-entity id="title-panel" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="title-panel-9" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
         <a-text value="Extra Terrestrial Presence" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
         <a-text value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
       </a-entity>
       
       <!-- Controls Panel at the Bottom -->
-      <a-entity id="controls-panel" position="0 -0.8 0" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="controls-panel-9" position="0 -0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.5" color="black" opacity="0.7" radius="0.05"></a-plane>
         
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
-          <a-image id="ig-link" class="clickable" 
+          <a-image id="ig-link-9" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
                  position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="web-link" class="clickable" 
+          <a-image id="web-link-9" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
                  position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="twitter-link" class="clickable" 
+          <a-image id="twitter-link-9" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
                  position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="youtube-link" class="clickable" 
+          <a-image id="youtube-link-9" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
                  position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
@@ -1046,9 +1045,9 @@ AFRAME.registerComponent('smooth-position', {
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <a-plane id="audio-button-9" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
             <!-- put play icon here-->
-            <a-image id="audio-button-pic" 
+            <a-image id="audio-button-pic-9" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
                      position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
@@ -1057,15 +1056,15 @@ AFRAME.registerComponent('smooth-position', {
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <a-plane id="more-info-button-9" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
             
-            <a-text id="more-info-text" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
+            <a-text id="more-info-text-9" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
       </a-entity>
       
       <!-- Expanded Info Panel (Initially Hidden) -->
-      <a-entity id="expanded-info" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="expanded-info-9" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
         <a-plane width="0.9" height="0.7" color="black" opacity="0.85" radius="0.05"></a-plane>
         <a-text value="Location: North Kaneshie, Accra" 
                 position="0 0.25 0.01" 
@@ -1095,34 +1094,34 @@ AFRAME.registerComponent('smooth-position', {
     <a-entity mindar-image-target="targetIndex: 10" mytarget artwork-info>
  
       <!-- Title Panel at the Top -->
-      <a-entity id="title-panel" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="title-panel-10" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
         <a-text value="Tranquil tones" position="0 0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
         <a-text value="by Nana Asomani" position="0 -0.06 0.01" align="center" color="white" width="1.1" font="kelsonsans"></a-text>
       </a-entity>
       
       <!-- Controls Panel at the Bottom -->
-      <a-entity id="controls-panel" position="0 -0.8 0" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="controls-panel-10" position="0 -0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.5" color="black" opacity="0.7" radius="0.05"></a-plane>
         
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
-          <a-image id="ig-link" class="clickable" 
+          <a-image id="ig-link-10" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
                  position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="web-link" class="clickable" 
+          <a-image id="web-link-10" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
                  position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="twitter-link" class="clickable" 
+          <a-image id="twitter-link-10" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
                  position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
-          <a-image id="youtube-link" class="clickable" 
+          <a-image id="youtube-link-10" class="clickable" 
                  src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
                  position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
@@ -1132,9 +1131,9 @@ AFRAME.registerComponent('smooth-position', {
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <a-plane id="audio-button-10" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
             <!-- put play icon here-->
-            <a-image id="audio-button-pic" 
+            <a-image id="audio-button-pic-10" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
                      position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
@@ -1143,15 +1142,15 @@ AFRAME.registerComponent('smooth-position', {
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <a-plane id="more-info-button-10" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
             
-            <a-text id="more-info-text" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
+            <a-text id="more-info-text-10" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
       </a-entity>
       
       <!-- Expanded Info Panel (Initially Hidden) -->
-      <a-entity id="expanded-info" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
+      <a-entity id="expanded-info-10" position="0 0 0.01" visible="false" smooth-position="factor: 0.1">
         <a-plane width="0.9" height="0.7" color="black" opacity="0.85" radius="0.05"></a-plane>
         <a-text value="Location: Oyarifa, Accra" 
                 position="0 0.25 0.01" 
