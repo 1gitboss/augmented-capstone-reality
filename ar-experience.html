@@ -118,7 +118,7 @@ AFRAME.registerComponent('smooth-position', {
           infoPanel.setAttribute('visible', this.showingMoreInfo);
           
           // Change button text
-          const infoButtonText = document.querySelector(`#more-info-text-${targetIndex}`);
+          const infoButtonText = document.querySelector(`#more-info-text-${this.data.targetIndex}`);
           if (infoButtonText) {
             infoButtonText.setAttribute('value', this.showingMoreInfo ? 'Hide Info' : 'More Info');
           }
