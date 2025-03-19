@@ -646,7 +646,7 @@ AFRAME.registerComponent('damped-movement', {
     </a-entity>
     
      <!--Target Image 4-->
-    <a-entity mindar-image-target="targetIndex: 4" mytarget artwork-info>
+    <a-entity mindar-image-target="targetIndex: 4" mytarget artwork-info damped-movement="positionDamping: 0.95; rotationDamping: 0.9; threshold: 0.003">
  
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-4" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
