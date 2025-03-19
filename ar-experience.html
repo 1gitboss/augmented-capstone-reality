@@ -211,6 +211,75 @@ AFRAME.registerComponent('smooth-position', {
     });
   }
 });
+AFRAME.registerComponent('damped-movement', {
+  schema: {
+    positionDamping: {type: 'number', default: 0.9},
+    rotationDamping: {type: 'number', default: 0.8},
+    threshold: {type: 'number', default: 0.005}
+  },
+  
+  init: function() {
+    this.lastPosition = new THREE.Vector3();
+    this.lastRotation = new THREE.Euler();
+    this.velocity = new THREE.Vector3();
+    this.isTracking = false;
+    
+    // Setup tracking state monitors
+    const targetEntity = this.el.closest('[mindar-image-target]');
+    if (targetEntity) {
+      targetEntity.addEventListener('targetFound', () => {
+        this.isTracking = true;
+        this.lastPosition.copy(this.el.object3D.position);
+        this.lastRotation.copy(this.el.object3D.rotation);
+        this.velocity.set(0, 0, 0);
+      });
+      
+      targetEntity.addEventListener('targetLost', () => {
+        this.isTracking = false;
+      });
+    }
+  },
+  
+  tick: function() {
+    if (!this.isTracking) return;
+    
+    // Get current values
+    const currentPos = this.el.object3D.position;
+    const currentRot = this.el.object3D.rotation;
+    
+    // Calculate new velocity with damping
+    this.velocity.x = (currentPos.x - this.lastPosition.x) * (1 - this.data.positionDamping);
+    this.velocity.y = (currentPos.y - this.lastPosition.y) * (1 - this.data.positionDamping);
+    this.velocity.z = (currentPos.z - this.lastPosition.z) * (1 - this.data.positionDamping);
+    
+    // Apply threshold filter (ignore very small movements)
+    if (this.velocity.length() < this.data.threshold) {
+      this.velocity.set(0, 0, 0);
+    }
+    
+    // Apply damped position
+    const dampedPos = new THREE.Vector3(
+      this.lastPosition.x + this.velocity.x,
+      this.lastPosition.y + this.velocity.y,
+      this.lastPosition.z + this.velocity.z
+    );
+    
+    // Apply rotation damping (simpler approach)
+    const dampedRot = new THREE.Euler(
+      this.lastRotation.x + (currentRot.x - this.lastRotation.x) * (1 - this.data.rotationDamping),
+      this.lastRotation.y + (currentRot.y - this.lastRotation.y) * (1 - this.data.rotationDamping),
+      this.lastRotation.z + (currentRot.z - this.lastRotation.z) * (1 - this.data.rotationDamping)
+    );
+    
+    // Update the entity with damped values
+    this.el.object3D.position.copy(dampedPos);
+    this.el.object3D.rotation.copy(dampedRot);
+    
+    // Save current values for next frame
+    this.lastPosition.copy(dampedPos);
+    this.lastRotation.copy(dampedRot);
+  }
+});
   </script>
   <style>
     body {
@@ -237,7 +306,7 @@ AFRAME.registerComponent('smooth-position', {
     </a-camera>
     
     <!--Target Image 0-->
-    <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info>
+    <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info damped-movement="positionDamping: 0.95; rotationDamping: 0.9; threshold: 0.003">
  
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-0" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
