@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adinkra Symbol Detector</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #camera, #canvas { width: 640px; height: 480px; margin: 10px auto; display: block; }
+        #symbol-info { margin: 20px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Adinkra Symbol Detector</h1>
+    <video id="camera" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+    <div id="symbol-info">Detected symbols will appear here.</div>
+
+    <script>
+        // Roboflow API Config (replace with your model's API key)
+        const API_KEY = "F18HnIZIkIzPqw8LQYRJ";
+        const MODEL_ENDPOINT = "adinkra-symbols/3"; // From your model URL
+
+        // Adinkra symbol database (customize with your symbols' info)
+        const ADINKRA_DB = {
+            "Gye Nyame": { 
+                meaning: "Except for God", 
+                origin: "Akan (Ghana)", 
+                description: "Represents the omnipotence and supremacy of God." 
+            },
+            "Eban": {
+                meaning: "Fence",
+                origin: "Akan (Ghana)",
+                description: "Symbol of safety, security, and protection. It reflects the importance of home and family as a safe haven."
+            },
+            "Duafe": {
+                meaning: "Wooden comb",
+                origin: "Akan (Ghana)",
+                description: "Symbol of cleanliness, good grooming, love, and feminine virtues. It represents care and nurturing."
+            },
+            "Fawohodie": {
+                meaning: "Independence",
+                origin: "Akan (Ghana)",
+                description: "Symbol of emancipation, freedom, and liberty. It celebrates the struggle for freedom and justice."
+            },
+        };
+
+        // DOM elements
+        const video = document.getElementById("camera");
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const infoDiv = document.getElementById("symbol-info");
+
+        // Start camera
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                setInterval(detectSymbols, 1000); // Process frames every 1 second
+            } catch (err) {
+                console.error("Camera error:", err);
+                alert("Could not access the camera. Please enable permissions.");
+            }
+        }
+
+        // Detect symbols using Roboflow API
+        async function detectSymbols() {
+            // Draw current video frame to canvas
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL("image/jpeg");
+
+            // Call Roboflow API
+            const response = await fetch(
+                `https://detect.roboflow.com/${MODEL_ENDPOINT}?api_key=${API_KEY}`,
+                {
+                    method: "POST",
+                    body: imageData,
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                }
+            );
+            const predictions = await response.json();
+
+            // Display results
+            displayDetections(predictions);
+        }
+
+        // Draw bounding boxes + show symbol info
+        function displayDetections(predictions) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            let infoHTML = "<h2>Detected Symbols:</h2>";
+            
+            if (predictions.predictions && predictions.predictions.length > 0) {
+                predictions.predictions.forEach(prediction => {
+                    // Draw bounding box
+                    ctx.strokeStyle = "#FF0000";
+                    ctx.lineWidth = 4;
+                    ctx.strokeRect(
+                        prediction.x - prediction.width / 2,
+                        prediction.y - prediction.height / 2,
+                        prediction.width,
+                        prediction.height
+                    );
+
+                    // Draw label
+                    ctx.fillStyle = "#FF0000";
+                    ctx.font = "20px Arial";
+                    ctx.fillText(
+                        `${prediction.class} (${Math.round(prediction.confidence * 100)}%)`,
+                        prediction.x - prediction.width / 2,
+                        prediction.y - prediction.height / 2 - 10
+                    );
+
+                    // Add symbol info
+                    if (ADINKRA_DB[prediction.class]) {
+                        const symbol = ADINKRA_DB[prediction.class];
+                        infoHTML += `
+                            <div class="symbol">
+                                <h3>${prediction.class}</h3>
+                                <p><strong>Meaning:</strong> ${symbol.meaning}</p>
+                                <p><strong>Origin:</strong> ${symbol.origin}</p>
+                                <p>${symbol.description}</p>
+                            </div>
+                        `;
+                    }
+                });
+            } else {
+                infoHTML = "<p>No symbols detected. Try moving closer or adjusting lighting.</p>";
+            }
+
+            infoDiv.innerHTML = infoHTML;
+        }
+
+        // Initialize
+        startCamera();
+    </script>
+</body>
+</html>
