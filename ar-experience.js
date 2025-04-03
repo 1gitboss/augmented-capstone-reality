@@ -60,17 +60,17 @@ AFRAME.registerComponent('artwork-info', {
     
     // Audio file paths for different artworks
     this.audioFiles = {
-      0: "audio/the-presence.mp3",
-      1: "audio/otema.mp3",
-      2: "audio/reflection.mp3",
-      3: "audio/in-her-void.mp3",
-      4: "audio/wade-in-water.mp3",
-      5: "audio/brown-tones.mp3",
-      6: "audio/ajabeng.mp3",
-      7: "audio/nsuo-mu-nsem.mp3",
-      8: "audio/ocean-view.mp3",
-      9: "audio/extra-terrestrial.mp3",
-      10: "audio/tranquil-tones.mp3",
+      0: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/The%20Prescence.mp3?v=1743723335478",
+      1: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Otema.mp3?v=1743722546250",
+      2: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Reflection.mp3?v=1743722600927",
+      3: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/In%20her%20void.mp3?v=1743722581704",
+      4: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Wade%20in%20Water.mp3?v=1743722614948",
+      5: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Beige-tones.mp3?v=1743722568269",
+      6: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Ajabeng.mp3?v=1743722563296",
+      7: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Nsuo%20mu%20Nsem.mp3?v=1743722591145",
+      8: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Ocean%20view.mp3?v=1743722595401",
+      9: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Extra%20Terrestrial%20Presence.mp3?v=1743722576457",
+      10: "https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/Tranquil%20tones.mp3?v=1743722604645",
       // Add more as needed
     };
     
