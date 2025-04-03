@@ -41,6 +41,7 @@ AFRAME.registerComponent('smooth-position', {
 });
 
 // Artwork info component for display and narration
+// Modified artwork-info component to use audio files instead of TTS
 AFRAME.registerComponent('artwork-info', {
   schema: {
     targetIndex: {type: 'number', default: 0}
@@ -57,20 +58,20 @@ AFRAME.registerComponent('artwork-info', {
       console.log(`Target index: ${this.data.targetIndex}`);
     }
     
-    // Audio narrations for different artworks
-    this.narrations = {
-      0: "The Presence is a photography project that explores the relationship between humans and the idea of a 'higher spiritual presence' in our lives. In a country like Ghana which is heavily religious, a lot of people base their decision making on the influence of a 'higher' intangible power which serves as a guide to them.",
-      1: "Otema is essentially an ode to my friend Otema (subject of the image) celebrating her strength and growth especially in the tech space.",
-      2: "Reflection explores the need as human being to ponder over life decision and experiences to better shape our existence.",
-      3: "In her void highlights the strength of women in a predominantly male dominated society. This sometimes isolate women in decision making however their unique strengths shine through.",
-      4: "Wade in Water explores the relationship between water and human existence. Since time immemorial, water has played a vital role in the formation of civilization and trade.",
-      5: "This shoot explores the interaction between brown tones and the human physique. In our part of the world, the colour brown plays a pivotal role in our culture from our skin to our landscapes.",
-      6: "Ajabeng was shot during a fitting for the collaboration between Ajabeng x Okuntakinte.",
-      7: "Nsuo mu Nsem, similar to Wade in water, explores the relationship between humans and water but this touches more on the spiritual impact of the element. This project was in collaboration with another photographer Joseph Awumee.",
-      8: "Ocean view is essentially an interplay of light and shadow on the human physique with the ocean serving as a backdrop.",
-      9: "Extra terrestrial Presence similar to The Presence tries to explore the idea of life and the 'influence' of external intangible forces be it spiritual, supernatural or even paranormal.",
-      10: "Tranquil tones essentially pays homage to nature and how it is an extension of our lives and pays an important role in our existence.",
-      // 11: "Fourth artwork description. This would be the narration for another piece in your collection."
+    // Audio file paths for different artworks
+    this.audioFiles = {
+      0: "audio/the-presence.mp3",
+      1: "audio/otema.mp3",
+      2: "audio/reflection.mp3",
+      3: "audio/in-her-void.mp3",
+      4: "audio/wade-in-water.mp3",
+      5: "audio/brown-tones.mp3",
+      6: "audio/ajabeng.mp3",
+      7: "audio/nsuo-mu-nsem.mp3",
+      8: "audio/ocean-view.mp3",
+      9: "audio/extra-terrestrial.mp3",
+      10: "audio/tranquil-tones.mp3",
+      // Add more as needed
     };
     
     // Wait for scene to load
@@ -123,6 +124,33 @@ AFRAME.registerComponent('artwork-info', {
     // Audio state
     this.isPlaying = false;
     this.audioElement = null;
+    
+    // Create audio element
+    this.createAudioElement();
+  },
+  
+  createAudioElement: function() {
+    // Create HTML audio element
+    this.audioElement = document.createElement('audio');
+    this.audioElement.id = `audio-narration-${this.data.targetIndex}`;
+    
+    // Set audio file based on target index
+    const audioSrc = this.audioFiles[this.data.targetIndex] || "";
+    if (audioSrc) {
+      this.audioElement.src = audioSrc;
+    }
+    
+    // Add event listeners
+    this.audioElement.addEventListener('ended', () => {
+      this.isPlaying = false;
+      const audioButtonPic = document.querySelector(`#audio-button-pic-${this.data.targetIndex}`);
+      if (audioButtonPic) {
+        audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+      }
+    });
+    
+    // Add the audio element to the DOM (hidden)
+    document.body.appendChild(this.audioElement);
   },
   
   setupButton: function(button, url) {
@@ -136,34 +164,44 @@ AFRAME.registerComponent('artwork-info', {
   },
   
   toggleAudio: function() {
-    // Cancel any currently playing speech
-    speechSynthesis.cancel();
-    
-    // Create audio element if it doesn't exist
+    // Make sure we have an audio element
     if (!this.audioElement) {
-      this.audioElement = new SpeechSynthesisUtterance();
-      this.audioElement.lang = 'en-US';
-      this.audioElement.onend = () => {
-        this.isPlaying = false;
-        const audioButtonPic = document.querySelector(`#audio-button-pic-${this.data.targetIndex}`);
-        if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
-      };
+      this.createAudioElement();
     }
     
-    // Get narration based on target index
-    const narration = this.narrations[this.data.targetIndex] || "No description available for this artwork.";
-    this.audioElement.text = narration;
-    
-    // Toggle audio state
-    this.isPlaying = !this.isPlaying;
     const audioButtonPic = document.querySelector(`#audio-button-pic-${this.data.targetIndex}`);
     
-    if (this.isPlaying) {
-      speechSynthesis.speak(this.audioElement);
-      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
+    if (!this.isPlaying) {
+      // Start playing
+      this.audioElement.play()
+        .then(() => {
+          this.isPlaying = true;
+          if (audioButtonPic) {
+            audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/pause.png?v=1741624608643");
+          }
+        })
+        .catch(error => {
+          console.error("Error playing audio:", error);
+          // If audio file can't be loaded, provide feedback
+          alert("Couldn't play audio narration. Make sure the audio file exists.");
+        });
     } else {
-      speechSynthesis.cancel();
-      if (audioButtonPic) audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+      // Pause playing
+      this.audioElement.pause();
+      this.isPlaying = false;
+      if (audioButtonPic) {
+        audioButtonPic.setAttribute("src", "https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933");
+      }
+    }
+  },
+  
+  // Clean up when component is removed
+  remove: function() {
+    if (this.audioElement) {
+      this.audioElement.pause();
+      if (this.audioElement.parentNode) {
+        this.audioElement.parentNode.removeChild(this.audioElement);
+      }
     }
   }
 });
