@@ -1,4 +1,7 @@
-  
+// artwork-components.js
+// Make sure to include this file AFTER aframe.min.js and any required extensions (like mindar)
+
+// Smooth position component for AR targets
 AFRAME.registerComponent('smooth-position', {
   schema: {
     factor: { type: 'number', default: 0.2 }
@@ -38,8 +41,9 @@ AFRAME.registerComponent('smooth-position', {
     this.el.object3D.position.copy(this.currentPosition);
   }
 });
-    
-    AFRAME.registerComponent('artwork-info', {
+
+// Artwork info component for display and narration
+AFRAME.registerComponent('artwork-info', {
   schema: {
     targetIndex: {type: 'number', default: 0}
   },
@@ -166,11 +170,12 @@ AFRAME.registerComponent('smooth-position', {
   }
 });
 
-   AFRAME.registerComponent('mytarget', {
+// Target detection and UI visibility component
+AFRAME.registerComponent('mytarget', {
   init: function () {
     let visibilityTimeout = null;
     
-        this.el.addEventListener('targetFound', () => {
+    this.el.addEventListener('targetFound', () => {
       console.log("Artwork detected!");
 
       // Clear any hiding timeout
@@ -203,6 +208,8 @@ AFRAME.registerComponent('smooth-position', {
     });
   }
 });
+
+// Damped movement component
 AFRAME.registerComponent('damped-movement', {
   schema: {
     positionDamping: {type: 'number', default: 0.9},
