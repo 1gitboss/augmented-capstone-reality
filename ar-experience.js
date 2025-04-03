@@ -1,5 +1,3 @@
-// artwork-components.js
-// Make sure to include this file AFTER aframe.min.js and any required extensions (like mindar)
 
 // Smooth position component for AR targets
 AFRAME.registerComponent('smooth-position', {
