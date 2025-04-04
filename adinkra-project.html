@@ -335,7 +335,15 @@
                     <button id="switch-camera">Switch Camera</button>
                     <button id="fullscreen-btn">Fullscreen</button>
                 </div>
+                <div class="additional-controls">
+                    <select id="quality-selector" onchange="changeDetectionQuality(this.value)">
+                        <option value="low">Low Quality (Faster)</option>
+                        <option value="medium" selected>Medium Quality</option>
+                        <option value="high">High Quality (Slower)</option>
+                    </select>
+                </div>
             </div>
+            
             
             <div class="info-container">
                 <div id="symbol-info">
@@ -562,13 +570,27 @@
 
         // Draw bounding boxes + show symbol info
         function displayDetections(predictions) {
+          
+            if (isInfoLocked) return;
+          
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            let infoHTML = "<h2>Detected Symbols</h2>";
+            let infoHTML = `
+                <div class="info-header">
+                    <h2>Detected Symbols</h2>
+                    <button id="lock-info" onclick="toggleInfoLock()">
+                        ${isInfoLocked ? 'Unlock' : 'Lock'} Info
+                    </button>
+                </div>
+            `;
             
             if (predictions.predictions && predictions.predictions.length > 0) {
-                predictions.predictions.forEach(prediction => {
+                  // Store the last valid predictions
+                  lastDetectedSymbols = predictions.predictions;
+
+                  // Process and display as before
+                  lastDetectedSymbols.forEach(prediction => {
                     const x = prediction.x - prediction.width / 2;
                     const y = prediction.y - prediction.height / 2;
                     
@@ -614,6 +636,10 @@
                         `;
                     }
                 });
+              } else if (lastDetectedSymbols.length > 0) {
+                  // Still show the last detected symbols but with a notice
+                  infoHTML += `<p class="notice">Showing last detected symbols. Move camera to detect new symbols.</p>`;
+        
             } else {
                 infoHTML = `
                     <h2>No Symbols Detected</h2>
