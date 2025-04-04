@@ -446,7 +446,10 @@
         const fullscreenBtn = document.getElementById("fullscreen-btn");
         const loader = document.getElementById("loader");
         const libraryContainer = document.getElementById("symbol-library");
-
+  
+        let lastDetectedSymbols = [];
+        let isInfoLocked = false;
+        let detectionQuality = "medium";
         let currentStream;
         let facingMode = "environment"; // Start with back camera
         let detectionInterval;
@@ -464,12 +467,20 @@
                 if (currentStream) {
                     currentStream.getTracks().forEach(track => track.stop());
                 }
+              
+                // Resolution based on quality setting
+                let resolution = { width: 640, height: 480 }; // medium quality default
+                if (detectionQuality === "low") {
+                    resolution = { width: 320, height: 240 };
+                } else if (detectionQuality === "high") {
+                    resolution = { width: 1280, height: 720 };
+                }
                 
                 const constraints = { 
                     video: { 
                         facingMode: facingMode,
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
+                        width: { ideal: resolution.width },
+                        height: { ideal: resolution.height }
                     } 
                 };
                 
@@ -479,8 +490,10 @@
                 
                 video.onloadedmetadata = () => {
                     setCanvasDimensions();
+                    //Use button click for detection instead of interval
                     if (detectionInterval) clearInterval(detectionInterval);
-                    detectionInterval = setInterval(detectSymbols, 3000); // Process frames every 3 seconds
+                    // // Optional: You can still keep a slower background detection
+                    detectionInterval = setInterval(detectSymbols, 10000); // Process frames every 10 seconds
                 };
             } catch (err) {
                 console.error("Camera error:", err);
@@ -675,6 +688,20 @@
                 infoDiv.scrollIntoView({ behavior: 'smooth' });
             }
         }
+      
+      
+        // this function is to toggle info locking
+        function toggleInfoLock() {
+            isInfoLocked = !isInfoLocked;
+            document.getElementById('lock-info').textContent = isInfoLocked ? 'Unlock Info' : 'Lock Info';
+        }
+
+        // A quality toggle function
+        function changeDetectionQuality(quality) {
+            detectionQuality = quality; // "low", "medium", or "high"
+            startCamera(); // Restart camera with new settings
+        }
+
 
         // Event listeners
         captureBtn.addEventListener('click', detectSymbols);
@@ -683,6 +710,8 @@
         
         // Make showSymbolInfo available to onclick handlers
         window.showSymbolInfo = showSymbolInfo;
+        window.toggleInfoLock = toggleInfoLock;
+        window.changeDetectionQuality = changeDetectionQuality;
 
         // Initialize
         startCamera();
