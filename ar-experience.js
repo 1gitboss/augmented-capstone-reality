@@ -315,3 +315,248 @@ AFRAME.registerComponent('damped-movement', {
     this.lastRotation.copy(dampedRot);
   }
 });
+
+// Advanced position stabilization with low-pass filtering
+AFRAME.registerComponent('ar-stabilizer', {
+  schema: {
+    // Higher values mean more smoothing but more lag
+    positionSmoothing: { type: 'number', default: 0.95 },
+    rotationSmoothing: { type: 'number', default: 0.92 },
+    // How many previous positions to average (higher = smoother but more lag)
+    bufferSize: { type: 'int', default: 5 }
+  },
+  
+  init: function() {
+    // Position variables
+    this.positionBuffer = [];
+    this.rawPosition = new THREE.Vector3();
+    this.filteredPosition = new THREE.Vector3();
+    
+    // Rotation variables
+    this.rotationBuffer = [];
+    this.rawRotation = new THREE.Euler();
+    this.filteredRotation = new THREE.Euler();
+    
+    // Tracking state
+    this.isTracking = false;
+    this.resetBuffers = true;
+    this.lastVisible = false;
+    
+    // Target entity for events
+    const targetEntity = this.el.closest('[mindar-image-target]');
+    if (targetEntity) {
+      targetEntity.addEventListener('targetFound', () => {
+        this.isTracking = true;
+        this.resetBuffers = true;
+        console.log('AR Stabilizer: Target found');
+      });
+      
+      targetEntity.addEventListener('targetLost', () => {
+        this.isTracking = false;
+        console.log('AR Stabilizer: Target lost');
+      });
+    }
+  },
+  
+  tick: function() {
+    // Only run when tracking
+    if (!this.isTracking) return;
+    
+    const obj = this.el.object3D;
+    
+    // Handle visibility changes
+    if (obj.visible !== this.lastVisible) {
+      if (obj.visible) this.resetBuffers = true;
+      this.lastVisible = obj.visible;
+    }
+    
+    // Initialize buffers or reset if needed
+    if (this.resetBuffers) {
+      this.initializeBuffers(obj);
+      this.resetBuffers = false;
+      return;
+    }
+    
+    // Store current raw position and rotation
+    this.rawPosition.copy(obj.position);
+    this.rawRotation.copy(obj.rotation);
+    
+    // Apply position filtering
+    this.updatePositionBuffer(this.rawPosition);
+    this.applyPositionFilter();
+    obj.position.copy(this.filteredPosition);
+    
+    // Apply rotation filtering
+    this.updateRotationBuffer(this.rawRotation);
+    this.applyRotationFilter();
+    obj.rotation.copy(this.filteredRotation);
+  },
+  
+  initializeBuffers: function(obj) {
+    // Reset position buffer
+    this.positionBuffer = [];
+    for (let i = 0; i < this.data.bufferSize; i++) {
+      this.positionBuffer.push(obj.position.clone());
+    }
+    this.filteredPosition.copy(obj.position);
+    
+    // Reset rotation buffer
+    this.rotationBuffer = [];
+    for (let i = 0; i < this.data.bufferSize; i++) {
+      this.rotationBuffer.push(new THREE.Euler(
+        obj.rotation.x,
+        obj.rotation.y,
+        obj.rotation.z,
+        obj.rotation.order
+      ));
+    }
+    this.filteredRotation.copy(obj.rotation);
+  },
+  
+  updatePositionBuffer: function(newPosition) {
+    this.positionBuffer.push(newPosition.clone());
+    if (this.positionBuffer.length > this.data.bufferSize) {
+      this.positionBuffer.shift();
+    }
+  },
+  
+  updateRotationBuffer: function(newRotation) {
+    this.rotationBuffer.push(new THREE.Euler(
+      newRotation.x,
+      newRotation.y,
+      newRotation.z,
+      newRotation.order
+    ));
+    if (this.rotationBuffer.length > this.data.bufferSize) {
+      this.rotationBuffer.shift();
+    }
+  },
+  
+  applyPositionFilter: function() {
+    // Low-pass filter implementation for position
+    const alpha = this.data.positionSmoothing;
+    
+    // Exponential moving average
+    this.filteredPosition.x = alpha * this.filteredPosition.x + (1 - alpha) * this.rawPosition.x;
+    this.filteredPosition.y = alpha * this.filteredPosition.y + (1 - alpha) * this.rawPosition.y;
+    this.filteredPosition.z = alpha * this.filteredPosition.z + (1 - alpha) * this.rawPosition.z;
+    
+    // Additional buffer average for more stability
+    if (this.data.bufferSize > 1) {
+      const bufferAvg = new THREE.Vector3();
+      this.positionBuffer.forEach(pos => bufferAvg.add(pos));
+      bufferAvg.divideScalar(this.positionBuffer.length);
+      
+      // Blend filtered position with buffer average
+      this.filteredPosition.lerp(bufferAvg, 0.3);
+    }
+  },
+  
+  applyRotationFilter: function() {
+    // Low-pass filter implementation for rotation
+    const alpha = this.data.rotationSmoothing;
+    
+    // Exponential moving average for each axis
+    this.filteredRotation.x = alpha * this.filteredRotation.x + (1 - alpha) * this.rawRotation.x;
+    this.filteredRotation.y = alpha * this.filteredRotation.y + (1 - alpha) * this.rawRotation.y;
+    this.filteredRotation.z = alpha * this.filteredRotation.z + (1 - alpha) * this.rawRotation.z;
+  }
+});
+
+// Component to stabilize content while keeping the tracking anchor aligned
+AFRAME.registerComponent('content-stabilizer', {
+  schema: {
+    transitionSpeed: { type: 'number', default: 0.08 }
+  },
+  
+  init: function() {
+    // Create a container for stable content
+    this.stableContainer = document.createElement('a-entity');
+    this.el.appendChild(this.stableContainer);
+    
+    // Move all child elements to the stable container
+    // except for any that have the "keep-unstable" class
+    Array.from(this.el.children).forEach(child => {
+      if (!child.classList.contains('keep-unstable') && 
+          child !== this.stableContainer) {
+        this.stableContainer.appendChild(child);
+      }
+    });
+    
+    // Target state tracking
+    this.isTracking = false;
+    this.targetVisible = false;
+    this.lastPosition = new THREE.Vector3();
+    this.lastRotation = new THREE.Euler();
+    this.lerpPosition = new THREE.Vector3();
+    this.lerpRotation = new THREE.Euler();
+    
+    // Setup tracking state monitors
+    const targetEntity = this.el.closest('[mindar-image-target]');
+    if (targetEntity) {
+      targetEntity.addEventListener('targetFound', () => {
+        this.isTracking = true;
+        this.targetVisible = true;
+        this.lastPosition.copy(this.el.object3D.position);
+        this.lastRotation.copy(this.el.object3D.rotation);
+        this.lerpPosition.copy(this.lastPosition);
+        this.lerpRotation.copy(this.lastRotation);
+      });
+      
+      targetEntity.addEventListener('targetLost', () => {
+        this.targetVisible = false;
+        setTimeout(() => {
+          if (!this.targetVisible) {
+            this.isTracking = false;
+          }
+        }, 300);
+      });
+    }
+  },
+  
+  tick: function() {
+    if (!this.isTracking) return;
+    
+    // Calculate the delta movement
+    const currentPos = this.el.object3D.position;
+    const currentRot = this.el.object3D.rotation;
+    const deltaPos = new THREE.Vector3().subVectors(currentPos, this.lastPosition);
+    
+    // Update lerp targets
+    this.lerpPosition.add(deltaPos);
+    
+    // Smooth angles carefully to avoid gimbal lock issues
+    this.lerpRotation.x += this.angleDifference(currentRot.x, this.lastRotation.x);
+    this.lerpRotation.y += this.angleDifference(currentRot.y, this.lastRotation.y);
+    this.lerpRotation.z += this.angleDifference(currentRot.z, this.lastRotation.z);
+    
+    // Apply inverse transform to the stable container
+    // This keeps content visually stable while parent tracks marker
+    const inversePos = new THREE.Vector3().copy(this.lerpPosition).sub(currentPos);
+    this.stableContainer.object3D.position.copy(inversePos);
+    
+    // Store current position and rotation for next frame
+    this.lastPosition.copy(currentPos);
+    this.lastRotation.copy(currentRot);
+    
+    // Gradually move lerp target toward actual position to avoid drift
+    this.lerpPosition.lerp(currentPos, this.data.transitionSpeed);
+    
+    // Smooth rotation blending
+    this.lerpRotation.x = this.approachAngle(this.lerpRotation.x, currentRot.x, this.data.transitionSpeed);
+    this.lerpRotation.y = this.approachAngle(this.lerpRotation.y, currentRot.y, this.data.transitionSpeed);
+    this.lerpRotation.z = this.approachAngle(this.lerpRotation.z, currentRot.z, this.data.transitionSpeed);
+  },
+  
+  // Helper function to find the smallest angle difference
+  angleDifference: function(a, b) {
+    let diff = ((a - b + Math.PI) % (Math.PI * 2)) - Math.PI;
+    return diff < -Math.PI ? diff + Math.PI * 2 : diff;
+  },
+  
+  // Helper function to smoothly approach an angle
+  approachAngle: function(current, target, speed) {
+    const diff = this.angleDifference(target, current);
+    return current + diff * speed;
+  }
+});
