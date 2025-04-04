@@ -470,18 +470,8 @@ AFRAME.registerComponent('content-stabilizer', {
   },
   
   init: function() {
-    // Create a container for stable content
-    this.stableContainer = document.createElement('a-entity');
-    this.el.appendChild(this.stableContainer);
-    
-    // Move all child elements to the stable container
-    // except for any that have the "keep-unstable" class
-    Array.from(this.el.children).forEach(child => {
-      if (!child.classList.contains('keep-unstable') && 
-          child !== this.stableContainer) {
-        this.stableContainer.appendChild(child);
-      }
-    });
+    // Don't create a new container or move children
+    // Instead, just track and compensate for movement
     
     // Target state tracking
     this.isTracking = false;
@@ -490,6 +480,21 @@ AFRAME.registerComponent('content-stabilizer', {
     this.lastRotation = new THREE.Euler();
     this.lerpPosition = new THREE.Vector3();
     this.lerpRotation = new THREE.Euler();
+    
+    // Track child entities we need to stabilize
+    this.childEntities = {
+      titlePanel: this.el.querySelector(`#title-panel-${this.getTargetIndex()}`),
+      controlsPanel: this.el.querySelector(`#controls-panel-${this.getTargetIndex()}`),
+      expandedInfo: this.el.querySelector(`#expanded-info-${this.getTargetIndex()}`)
+    };
+    
+    // Store original positions
+    this.originalPositions = {};
+    for (const [key, entity] of Object.entries(this.childEntities)) {
+      if (entity) {
+        this.originalPositions[key] = new THREE.Vector3().copy(entity.object3D.position);
+      }
+    }
     
     // Setup tracking state monitors
     const targetEntity = this.el.closest('[mindar-image-target]');
@@ -514,6 +519,11 @@ AFRAME.registerComponent('content-stabilizer', {
     }
   },
   
+  getTargetIndex: function() {
+    const targetEntity = this.el.closest('[mindar-image-target]');
+    return targetEntity ? targetEntity.getAttribute('mindar-image-target').targetIndex : 0;
+  },
+  
   tick: function() {
     if (!this.isTracking) return;
     
@@ -530,10 +540,20 @@ AFRAME.registerComponent('content-stabilizer', {
     this.lerpRotation.y += this.angleDifference(currentRot.y, this.lastRotation.y);
     this.lerpRotation.z += this.angleDifference(currentRot.z, this.lastRotation.z);
     
-    // Apply inverse transform to the stable container
-    // This keeps content visually stable while parent tracks marker
-    const inversePos = new THREE.Vector3().copy(this.lerpPosition).sub(currentPos);
-    this.stableContainer.object3D.position.copy(inversePos);
+    // Apply compensation to each child entity that needs stabilization
+    for (const [key, entity] of Object.entries(this.childEntities)) {
+      if (entity) {
+        // Calculate compensation position (inverse of parent movement)
+        const inversePos = new THREE.Vector3().copy(this.lerpPosition).sub(currentPos);
+        
+        // Apply to original position
+        const originalPos = this.originalPositions[key];
+        const stabilizedPos = new THREE.Vector3().copy(originalPos).add(inversePos);
+        
+        // Update entity position
+        entity.object3D.position.copy(stabilizedPos);
+      }
+    }
     
     // Store current position and rotation for next frame
     this.lastPosition.copy(currentPos);
