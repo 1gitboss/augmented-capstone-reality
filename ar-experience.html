@@ -9,34 +9,28 @@
       margin: 0;
       overflow: hidden;
     }
-    /* Ensure buttons are clickable and have a pointer cursor */
-    .clickable {
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
-  <!-- Welcome audio element -->
-  <audio id="welcome-audio" src="https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/welcome_message.mp3?v=1743723335478"></audio>
-  
   <a-scene
-    mindar-image="imageTargetSrc:https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/final-targets.mind?v=1742223388154; 
-    filterMinCF: 0.05; 
-    filterBeta: 200;  
-    missTolerance: 20;
-    warmupTolerance: 10;" 
-    vr-mode-ui="enabled: false"
-    color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
-    device-orientation-permission-ui="enabled: false"
-  >
+  mindar-image="imageTargetSrc:https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/final-targets.mind?v=1742223388154; 
+  filterMinCF: 0.05; 
+  filterBeta: 200;  
+  missTolerance: 20;
+  warmupTolerance: 10;" 
+  vr-mode-ui="enabled: false"
+  color-space="sRGB"
+  renderer="colorManagement: true, physicallyCorrectLights"
+  device-orientation-permission-ui="enabled: false"
+>
     <!-- Add Cursor for Clicking -->
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" 
               raycaster="far: 10000; objects: .clickable">
     </a-camera>
     
-    <!-- Target Image 0 -->
-    <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info damped-movement="positionDamping: 0.98; rotationDamping: 0.95; threshold: 0.002" content-stabilizer="transitionSpeed: 0.05">
+    <!--Target Image 0-->
+    <a-entity mindar-image-target="targetIndex: 0" mytarget artwork-info damped-movement="positionDamping: 0.98; rotationDamping: 0.95; threshold: 0.002" content-stabilizer="transitionSpeed: 0.05" >
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-0" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -51,23 +45,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-0" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-0" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-0" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-0" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -75,16 +69,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-0" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-0" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-0" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-0" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-0" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-0" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -113,10 +110,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 1 -->
+     <!--Target Image 1-->
     <a-entity mindar-image-target="targetIndex: 1" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-1" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -131,23 +130,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-1" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-1" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-1" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-1" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -155,16 +154,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-1" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-1" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-1" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-1" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-1" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-1" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -193,10 +195,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 2 -->
+     <!--Target Image 2-->
     <a-entity mindar-image-target="targetIndex: 2" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-2" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -211,23 +215,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-2" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-2" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-2" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-2" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -235,16 +239,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-2" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-2" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-2" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-2" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-2" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-2" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -273,10 +280,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 3 -->
+    <!-- Target Image 3-->
     <a-entity mindar-image-target="targetIndex: 3" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-3" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -291,23 +300,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-3" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-3" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-3" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-3" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -315,16 +324,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-3" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-3" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-3" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-3" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-3" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-3" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -353,10 +365,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 4 -->
+     <!--Target Image 4-->
     <a-entity mindar-image-target="targetIndex: 4" mytarget artwork-info damped-movement="positionDamping: 0.95; rotationDamping: 0.9; threshold: 0.003">
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-4" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -371,23 +385,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-4" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-4" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-4" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-4" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -395,16 +409,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-4" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-4" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-4" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-4" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-4" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-4" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -433,10 +450,14 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
+
     
-    <!-- Target Image 5 -->
+    
+     <!--Target Image 5-->
     <a-entity mindar-image-target="targetIndex: 5" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-5" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -451,23 +472,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-5" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-5" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-5" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-5" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -475,16 +496,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-5" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-5" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-5" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-5" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-5" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-5" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -513,10 +537,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 6 -->
+     <!--Target Image 6-->
     <a-entity mindar-image-target="targetIndex: 6" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-6" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -531,23 +557,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-6" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-6" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-6" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-6" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -555,16 +581,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-6" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-6" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-6" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-6" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-6" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-6" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -593,10 +622,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
-    
-    <!-- Target Image 7 -->
+
+     <!--Target Image 7-->
     <a-entity mindar-image-target="targetIndex: 7" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-7" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -611,23 +642,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-7" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-7" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-7" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-7" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -635,16 +666,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-7" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-7" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-7" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-7" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-7" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-7" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -659,7 +693,7 @@
                 color="white" 
                 width="0.8">
         </a-text>
-        <a-text value="Inspiration: The shot particularly draws inspiration from the 1803 Igbo landings where rebellious slaves in their bid to resist slavery marched into water and committed mass suicide."
+        <a-text value="Inspiration: The shot particularlly draws inspiration from the 1803 Igbo landings where rebellious slaves in their bid to resist slaves marched into water and committed mass suicide."
                 position="0 0 0.01" 
                 align="center"
                 color="white" 
@@ -673,10 +707,12 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 8 -->
+     <!--Target Image 8-->
     <a-entity mindar-image-target="targetIndex: 8" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-8" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -691,23 +727,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-8" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-8" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-8" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-8" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -715,16 +751,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-8" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-8" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-8" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-8" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-8" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-8" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -753,10 +792,13 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 9 -->
+    
+     <!--Target Image 9-->
     <a-entity mindar-image-target="targetIndex: 9" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-9" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -771,23 +813,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-9" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-9" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-9" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-9" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -795,16 +837,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-9" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-9" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-9" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-9" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-9" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-9" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -833,10 +878,13 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
     
-    <!-- Target Image 10 -->
+    
+     <!--Target Image 10-->
     <a-entity mindar-image-target="targetIndex: 10" mytarget artwork-info>
+ 
       <!-- Title Panel at the Top -->
       <a-entity id="title-panel-10" position="0 0.8 0" visible="false" smooth-position="factor: 0.1">
         <a-plane width="1.2" height="0.25" color="black" opacity="0.7" radius="0.05"></a-plane>
@@ -851,23 +899,23 @@
         <!-- Social Media Icons -->
         <a-entity position="-0.25 -0.1 0.01">
           <a-image id="ig-link-10" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
-                   position="0 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/IG.png?v=1740499993566"
+                 position="0 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="web-link-10" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
-                   position="0.2 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/www.png?v=1741643565189"
+                 position="0.2 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="twitter-link-10" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
-                   position="0.4 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/twitter%20(1).png?v=1741643436230"
+                 position="0.4 0 0" height="0.15" width="0.15">
           </a-image>
           
           <a-image id="youtube-link-10" class="clickable" 
-                   src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
-                   position="0.6 0 0" height="0.15" width="0.15" button-animation>
+                 src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/behance(1).png?v=1741643496431"
+                 position="0.6 0 0" height="0.15" width="0.15">
           </a-image>
         </a-entity>
         
@@ -875,16 +923,19 @@
         <a-entity position="0 0.1 0.01">
           <!-- Audio Button -->
           <a-entity position="-0.1 0 0">
-            <a-plane id="audio-button-10" class="clickable" color="#34a853" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="audio-button-10" class="clickable" color="#34a853" width="0.3" height="0.15" radius="0.05"></a-plane>
+            <!-- put play icon here-->
             <a-image id="audio-button-pic-10" 
                      src="https://cdn.glitch.global/9b643d33-8eab-444c-bfc4-185db20906b5/play%20(1).png?v=1741624616933"
-                     position="0 0 0.01" height="0.12" width="0.12">
+                     position= "0 0 0.01" height="0.15" width="0.15">
             </a-image>
+<!--             <a-text id="audio-button-text" value="Play Audio" align="center" position="0 0 0.01" color="white" width="1"></a-text> -->
           </a-entity>
           
           <!-- More Info Button -->
           <a-entity position="0.3 0 0">
-            <a-plane id="more-info-button-10" class="clickable" color="#4285f4" width="0.35" height="0.18" radius="0.05" button-animation></a-plane>
+            <a-plane id="more-info-button-10" class="clickable" color="#4285f4" width="0.3" height="0.15" radius="0.05"></a-plane>
+            
             <a-text id="more-info-text-10" value="More Info" align="center" position="0 0 0.01" color="white" width="1"></a-text>
           </a-entity>
         </a-entity>
@@ -899,7 +950,7 @@
                 color="white" 
                 width="0.8">
         </a-text>
-        <a-text value="Inspiration: The green and blue tones of this image were inspired by the surrounding nature of the location."
+        <a-text value="Inspiration: The green and blue tones of this image was inspired by the surrounding nature of the location."
                 position="0 0 0.01" 
                 align="center"
                 color="white" 
@@ -913,7 +964,9 @@
                 width="0.8">
         </a-text>
       </a-entity>
+      
     </a-entity>
+    
   </a-scene>
 </body>
 </html>
