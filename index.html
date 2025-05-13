@@ -271,6 +271,56 @@
             transform: translateY(-5px);
         }
         
+        .how-to-use {
+            padding: 80px 20px;
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .steps-container {
+            max-width: 900px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .step-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            position: relative;
+        }
+        
+        .step-number {
+            background-color: var(--primary);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .step-title {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 1.3rem;
+        }
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -302,7 +352,6 @@
         <p>Experience Ghana's rich cultural heritage through the lens of cutting-edge augmented reality</p>
         <div class="cta-buttons">
             <a href="#spectra" class="cta-button">Spectra of Self</a>
-            <a href="#adinkra" class="cta-button secondary">Adinkra Alive</a>
         </div>
     </header>
 
@@ -315,29 +364,43 @@
                 </div>
                 <div class="feature-content" >
                     <h3 class="feature-title">Spectra of Self- Nana Asomani</h3>
-                    <p>Unveil another layer of the works of Nana Asomani and and uncover the hidden stories beyond the canvas.</p>
-                  <a href="ar-experience.html" class="project-link">Explore Exhibition</a>
-                </div>
-            </div>
-            
-          
-            
-            <div class="feature-card" id="adinkra">
-                <div class="feature-img">
-                    <img src="https://cdn.glitch.global/efbdd796-2226-4f2d-842a-2b1ca1ca40af/adinkra-cover.png?v=1743643462685" style="object-fit: cover; width: 100%; height: 100%;" alt="Adinkra- AR Tool" />
-                </div>
-                <div class="feature-content" >
-                    <h3 class="feature-title">Adinkra Alive - Edu Innovation</h3>
-                    <p>Learn about Akan traditional symbols and their meanings through interactive digital experiences accessible to all.</p>
-                    <a href="adinkra-project.html" class="project-link">Discover Adinkra</a>
+                    <p>Unveil another layer of the works of Nana Asomani and uncover the hidden stories beyond the canvas.</p>
+                    <a href="ar-experience.html" class="project-link">Explore Exhibition</a>
                 </div>
             </div>
         </div>
     </section>
 
-    
-
-   
+    <section class="how-to-use">
+        <h2 class="section-title">How to Use ARIA Ghana</h2>
+        <p>Follow these simple steps to immerse yourself in our augmented reality experience</p>
+        
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Grant Camera Access</h3>
+                <p>When prompted, allow the application to access your device's camera. This is essential for the AR experience to work properly.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Wait for Scanning Animation</h3>
+                <p>After granting camera access, wait for the scanning animation to appear. This may take a moment depending on your internet connection speed.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Scan the Artwork</h3>
+                <p>Point your camera at the artwork to scan it. Keep your device steady and ensure good lighting for the best experience.</p>
+            </div>
+            
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Enjoy the Experience</h3>
+                <p>Once the artwork is recognized, the AR experience will begin automatically. Move around to explore different perspectives.</p>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <p>&copy; 2025 ARIA Ghana. All rights reserved.</p>
