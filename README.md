@@ -4,7 +4,7 @@
 Augmented Capstone Reality is an augmented reality (AR) web application that uses A-Frame and MindAR to display artwork information and audio narration when specific image targets are detected by a device’s camera.
 
 ## GitHub Repository
-Source code is available at: https://github.com/your-username/augmented-capstone.git
+Source code is available at: [https://github.com/your-username/augmented-capstone.git](https://github.com/1gitboss/augmented-capstone-reality.git)
 
 ## How to Install and Run Locally
 Follow these steps to run the app on your machine:
@@ -12,7 +12,7 @@ Follow these steps to run the app on your machine:
 1. **Clone the Repository**:
    - Open a terminal and run:
      ```
-     git clone https://github.com/your-username/augmented-capstone.git
+     git clone [https://github.com/your-username/augmented-capstone.git](https://github.com/1gitboss/augmented-capstone-reality.git)
      ```
    - Navigate to the project folder:
      ```
@@ -49,7 +49,7 @@ You can deploy this app to Glitch or another static hosting platform:
 
 1. **Deploy to Glitch**:
    - Go to Glitch.com, click “New Project,” then “Import from GitHub.”
-   - Enter: https://github.com/your-username/augmented-capstone.git
+   - Enter: [https://github.com/your-username/augmented-capstone.git](https://github.com/1gitboss/augmented-capstone-reality.git)
    - Click “OK” to remix and host the project.
 
 2. **Deploy to Netlify** (alternative):
