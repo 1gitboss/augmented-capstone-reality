@@ -12,7 +12,7 @@ Follow these steps to run the app on your machine:
 1. **Clone the Repository**:
    - Open a terminal and run:
      ```
-     git clone [https://github.com/your-username/augmented-capstone.git](https://github.com/1gitboss/augmented-capstone-reality.git)
+     git clone https://github.com/1gitboss/augmented-capstone-reality.git)
      ```
    - Navigate to the project folder:
      ```
